@@ -1,0 +1,11 @@
+<mat-toolbar class="{{path}}">
+    <span routerLink="/" class="img"></span>
+    
+    <span class="spacer"></span>
+    <button mat-raised-button class="mx-3 login"routerLink="/userLogin" *ngIf="path=='userRegister'||path=='landing' ||path=='verifyPhone'" aria-label="Example icon-button with heart icon">
+      Login
+    </button>
+    <button mat-raised-button class="mx-3 signup" routerLink="/verifyPhone"  *ngIf="path=='userLogin'||path=='landing'" aria-label="Example icon-button with share icon">
+      Sign Up
+    </button>
+  </mat-toolbar>

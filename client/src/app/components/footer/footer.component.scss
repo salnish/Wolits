@@ -1,0 +1,33 @@
+.footer{
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    width: 100%;
+    padding-left: 50px;
+    background-color: black;
+}
+.logo{
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-image: url("../../../assets/images/Logo-white.png");
+    left: 0;
+    top: 15px;
+    width: 200px;
+    height: 60px;
+}
+mat-icon{
+    position: relative;
+    top: 15px;
+    left: 150px;
+    color:white;
+}
+.terms{
+    float: right;
+}
+
+a{
+    color: white;
+}

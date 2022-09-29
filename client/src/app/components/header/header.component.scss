@@ -1,0 +1,73 @@
+$bg-orange:orange;
+$bg-black:black;
+$b-Logo:url('../../../assets/images/Logo-black.png');
+$w-Logo:url('../../../assets/images/Logo-white.png');
+
+
+
+  .landing{
+    background-color: $bg-orange;
+    .spacer {
+      flex: 1 1 auto;
+    }
+    .img{
+      background-position: center;
+      background-size: cover;
+      background-image:$b-Logo;
+      width: 200px;
+      height:45px;
+    }
+    .login{
+      background-color: white;
+      color: $bg-black;
+    }
+    .signup{
+      background-color: $bg-black;
+      color: white;
+    }
+
+  }
+
+
+  .userRegister{
+    background-color: $bg-black;
+    .spacer {
+      flex: 1 1 auto;
+    }
+    .img{
+      background-position: center;
+      background-size: cover;
+      background-image:$w-Logo;
+      width: 200px;
+      height: 45px;
+    }
+  }
+
+
+  .verifyPhone{
+    background-color: $bg-black;
+    .spacer {
+      flex: 1 1 auto;
+    }
+    .img{
+      background-position: center;
+      background-size: cover;
+      background-image:$w-Logo;
+      width: 200px;
+      height: 45px;
+    }
+  }
+
+  .userLogin{
+    background-color: $bg-black;
+    .spacer {
+      flex: 1 1 auto;
+    }
+    .img{
+      background-position: center;
+      background-size: cover;
+      background-image: $w-Logo;
+      width: 200px;
+      height: 45px;
+    }
+  }

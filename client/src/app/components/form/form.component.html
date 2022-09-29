@@ -1,0 +1,134 @@
+
+<mat-card>
+    <div class="bar">
+      {{signupForm.controls['password'].value}}
+      <mat-progress-bar *ngIf="bar" mode="indeterminate"></mat-progress-bar>
+    </div>
+    <mat-card-content>
+      <div class="header">
+        <img class="logo" src="../../../assets/images/logo-part-black.png" alt="">
+        <h2>{{title}}</h2>
+      </div>
+      <form *ngIf="side=='verifyPhone'" (ngSubmit)="phoneSubmit()" name="loginForm" [formGroup]="phoneForm">
+        <div class="emailInput">
+          <mat-form-field class="full-width my-2" appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input formControlName="phone" matInput placeholder="Enter phone number" required />
+            <mat-error *ngIf="!phoneForm.controls['phone'].valid">
+              phone number is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <p *ngIf="errorMsg" style="color: red;">{{errorMsg+"!"}}</p>
+        <button class="submit my-2" mat-flat-button color="primary" type="submit">{{title}}</button>
+      </form>
+
+      <form *ngIf="side=='otp'" (ngSubmit)="otpSubmit()" name="otpForm" [formGroup]="otpForm">
+        <div class="emailInput">
+          <mat-form-field class="full-width my-2" appearance="outline">
+            <mat-label>OTP</mat-label>
+            <input formControlName="otp" matInput placeholder="Enter the OTP recieved" required />
+            <mat-error *ngIf="!otpForm.controls['otp'].valid">
+              Six digit is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <p *ngIf="errorMsg" style="color: red;">{{errorMsg+"!"}}</p>
+        <button class="submit my-2" mat-flat-button color="primary" type="submit">{{title}}</button>
+      </form>
+
+
+      <form *ngIf="side=='login'" (ngSubmit)="loginSubmit()" name="loginForm" [formGroup]="loginForm">
+        <div class="emailInput">
+          <mat-form-field class="full-width my-2" appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input formControlName="phone" matInput placeholder="Enter phone number" required />
+            <mat-error *ngIf="!loginForm.controls['phone'].valid">
+              phone number is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div>
+          <mat-form-field class="full-width my-2" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required />
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>
+                {{hide ? 'visibility_off' : 'visibility'}}
+              </mat-icon>
+            </button>
+            <mat-error *ngIf="!loginForm.controls['password'].valid">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <p *ngIf="errorMsg" style="color: red;">{{errorMsg+"!"}}</p>
+        <button class="submit my-2" mat-flat-button color="primary" type="submit">{{title}}</button>
+      </form>
+
+      <form *ngIf="side=='signup'" (ngSubmit)="signupSubmit()" name="signupForm" [formGroup]="signupForm">
+        <div class="emailInput">
+          <mat-form-field class="full-width my-2" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input formControlName="name" matInput placeholder="Enter your fullname" required />
+            <mat-error *ngIf="!signupForm.controls['name'].valid">
+              full name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="emailInput">
+          <mat-form-field class="full-width my-2" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput placeholder="Enter your Email" required />
+            <mat-error *ngIf="!signupForm.controls['email'].valid">
+              Email is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div>
+          <mat-form-field class="full-width my-2" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required />
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>
+                {{hide ? 'visibility_off' : 'visibility'}}
+              </mat-icon>
+            </button>
+            <mat-error *ngIf="!signupForm.controls['password'].valid">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+           
+        <div>
+          <mat-form-field class="full-width my-2" appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input formControlName="confirm" matInput [type]=" confirmHide ? 'password' : 'text'" required />
+            <button mat-icon-button matSuffix (click)="confirmHide = !confirmHide" [attr.aria-label]="'Hide Password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>
+                {{hide ? 'visibility_off' : 'visibility'}}
+              </mat-icon>
+            </button>
+            <mat-error *ngIf="!signupForm.controls['password'].valid">
+             Fill the password before confirm
+            </mat-error>
+            <mat-error *ngIf="signupForm.controls['confirm'].valid && signupForm.controls['confirm'].value==signupForm.controls['password'].value">
+             Confirm Password is required
+            </mat-error>
+            <mat-error *ngIf="signupForm.controls['confirm'].value!==signupForm.controls['password'].value&&signupForm.controls['password'].valid">
+              Password mismatch
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <p *ngIf="errorMsg" style="color: red;">{{errorMsg+"!"}}</p>
+        <button class="submit my-2" mat-flat-button color="primary" type="submit">{{title}}</button>
+      </form>
+
+
+    </mat-card-content>
+  </mat-card>

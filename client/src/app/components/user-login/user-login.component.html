@@ -1,0 +1,11 @@
+<app-header></app-header>
+<div class="container-fluid">
+    <app-form 
+    [title]="title"
+    (form)="onLogin($event)" 
+    [path]="path"
+    [bar]="bar"
+    [errorMsg]="err"
+    [side]="side"></app-form>
+</div>
+<app-footer></app-footer>
