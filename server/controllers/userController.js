@@ -124,7 +124,7 @@ const loginUser= asyncHandler(async(req,res)=>{
     //check for user phone
     const user = await User.findOne({phone});
 
-    if (user && (await bcypt.compare(password, user.password))) {
+    if (user && (await bcrypt.compare(password, user.password))) {
         res.json({
           _id: user.id,
           email: user.email,
