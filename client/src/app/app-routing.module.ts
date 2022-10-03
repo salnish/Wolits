@@ -1,3 +1,5 @@
+import { PartnerVerifyPhoneComponent } from './components/partner-verify-phone/partner-verify-phone.component';
+import { HeaderComponent } from './components/header/header.component';
 import { OtpVerifyComponent } from './components/otp-verify/otp-verify.component';
 import { VerifyPhoneComponent } from './components/verify-phone/verify-phone.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
@@ -9,11 +11,17 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {path:'',redirectTo:'/landing',pathMatch:'full'},
+  {path:'head',component:HeaderComponent},
   {path:'landing',component:LandingComponent},
   {path:'verifyPhone',component:VerifyPhoneComponent},
   {path:'verifyOtp',component:OtpVerifyComponent},
   {path:'userRegister',component:UserRegisterComponent},
   {path:'userLogin',component:UserLoginComponent},
+
+  //partner
+  {path:'partnerVerify',component:PartnerVerifyPhoneComponent},
+
+  //not found
   {path:'**', component:NotFoundComponent}
 ];
 

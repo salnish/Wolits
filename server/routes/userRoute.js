@@ -6,12 +6,17 @@ const {
   verifyNumber,
   registerUser,
   loginUser,
+  isUser,
+  updateLocation
 } = require("../controllers/userController");
-const { signupTimeOut } = require("../middleware/authMIddleware");
+const { signupTimeOut, protect ,refreshAccessToken } = require("../middleware/authMIddleware");
 
-router.get("/", loginUser);
+router.post("/", loginUser);
+router.get("/isUser", protect, isUser);
 router.post("/verifyNumber", sentOtp);
 router.put("/verifyOtp", signupTimeOut, verifyNumber);
 router.put("/register", signupTimeOut, registerUser);
+router.put("/updateLocation",protect,updateLocation);
+router.post('/refresh',refreshAccessToken)
 
 module.exports = router;

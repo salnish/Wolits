@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule} from '@angular/flex-layout';
+
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { OtpVerifyComponent } from './components/otp-verify/otp-verify.component';
 import { VerifyPhoneComponent } from './components/verify-phone/verify-phone.component';
+import { PartnerVerifyPhoneComponent } from './components/partner-verify-phone/partner-verify-phone.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,8 @@ import { VerifyPhoneComponent } from './components/verify-phone/verify-phone.com
     FooterComponent,
     NotFoundComponent,
     OtpVerifyComponent,
-    VerifyPhoneComponent
+    VerifyPhoneComponent,
+    PartnerVerifyPhoneComponent
   ],
   imports: [
     FormsModule,
@@ -47,6 +53,7 @@ import { VerifyPhoneComponent } from './components/verify-phone/verify-phone.com
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FlexLayoutModule,
 
     MatToolbarModule,
     MatIconModule,
@@ -55,7 +62,9 @@ import { VerifyPhoneComponent } from './components/verify-phone/verify-phone.com
     MatCardModule,
     MatFormFieldModule,
     MatProgressBarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSidenavModule,
+    MatMenuModule
   ],
   providers: [AuthService,{
     provide:HTTP_INTERCEPTORS,

@@ -14,7 +14,6 @@ export class FormComponent implements OnInit {
   confirmHide:boolean =true;
 
   @Input() title:string='' 
-  @Input() path:string=''
   @Input() side!:string
   @Input() errorMsg:string=''
   @Input() bar:boolean= false;

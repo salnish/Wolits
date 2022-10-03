@@ -2,7 +2,17 @@ $bg-orange:orange;
 $bg-black:black;
 $b-Logo:url('../../../assets/images/Logo-black.png');
 $w-Logo:url('../../../assets/images/Logo-white.png');
+$w-PartnerLogo:url('../../../assets/images/partnerLogoWhite.png');
+$b-PartnerLogo:url('../../../assets/images/partnerLogoBlack.png');
 
+drop-bar{
+  padding: 1em;
+  background-color: grey;
+  button{
+    background-color: gray;
+    border-bottom: 1px solid black;
+  }
+}
 
 
   .landing{
@@ -31,6 +41,9 @@ $w-Logo:url('../../../assets/images/Logo-white.png');
 
   .userRegister{
     background-color: $bg-black;
+    .hamburger{
+      color: white;
+    }
     .spacer {
       flex: 1 1 auto;
     }
@@ -46,6 +59,26 @@ $w-Logo:url('../../../assets/images/Logo-white.png');
 
   .verifyPhone{
     background-color: $bg-black;
+    .hamburger{
+      color: white;
+    }
+    .spacer {
+      flex: 1 1 auto;
+    }
+    .img{
+      background-position: center;
+      background-size: cover;
+      background-image:$w-Logo;
+      width: 200px;
+      height: 45px;
+    }
+  }
+
+  .verifyOtp{
+    background-color: $bg-black;
+    .hamburger{
+      color: white;
+    }
     .spacer {
       flex: 1 1 auto;
     }
@@ -63,11 +96,38 @@ $w-Logo:url('../../../assets/images/Logo-white.png');
     .spacer {
       flex: 1 1 auto;
     }
+
+    .hamburger{
+      color: white;
+    }
+
     .img{
       background-position: center;
       background-size: cover;
       background-image: $w-Logo;
       width: 200px;
+      height: 45px;
+    }
+  }
+
+
+
+
+
+  
+  .partnerVerify{
+    background-color: $bg-black;
+    .hamburger{
+      color: white;
+    }
+    .spacer {
+      flex: 1 1 auto;
+    }
+    .img{
+      background-position: center;
+      background-size: cover;
+      background-image:$w-PartnerLogo;
+      width: 150px;
       height: 45px;
     }
   }

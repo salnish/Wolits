@@ -22,9 +22,8 @@ const signupTimeOut = asyncHandler(async (req, res, next) => {
     } catch (error) {
       if (error.message == "jwt expired") {
         console.log("hhhhhhhhhhhhhhhhhh")
-        res.status(200).json({
-          tokenExpired: true,
-        });
+        res.status(401);
+        throw new Error(error.message);
       } else {
         console.log(error.message);
         res.status(401);
@@ -39,4 +38,80 @@ const signupTimeOut = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { signupTimeOut };
+const refreshAccessToken= asyncHandler(async(req,res,next)=>{
+  console.log(req.body)
+  const {refreshToken}=req.body
+  let token;
+  if (
+    refreshToken
+  ) {
+    try{
+       //Get token from header
+       token = refreshToken
+
+       //Verify token
+       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+ 
+       //Get user from the token
+       let user = await User.findById(decoded.id).select("-password")
+
+       if (user){
+        console.log('djhkdjhfdjhdsfhjsda')
+        res.status(200).json({
+          refresh:true,
+          token:generateToken(user.id,60*5)
+        })
+       }
+    }catch(error){
+      res.status(401);
+        throw new Error(error.message);
+
+    }
+  }
+})
+
+const protect = asyncHandler(async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    try {
+      //Get token from header
+      token = req.headers.authorization.split(" ")[1];
+
+      //Verify token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      //Get user from the token
+      req.user = await User.findById(decoded.id).select("-password")
+
+      next();
+    } catch (error) {
+      if (error.message == "jwt expired") {
+        console.log("hhhhhhhhhhhhhhhhhh")
+        res.status(401);
+        throw new Error(error.message);
+      } else {
+        console.log(error.message);
+        res.status(401);
+        throw new Error("Not authorised");
+      }
+    }
+  }
+
+  if (!token) {
+    res.status(401);
+    throw new Error("Not authorized,no token");
+  }
+});
+
+
+//Generate Jwt
+const generateToken = (id, time) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: time,
+  });
+};
+
+module.exports = { signupTimeOut , protect,refreshAccessToken};

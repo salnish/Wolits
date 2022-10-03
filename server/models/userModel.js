@@ -16,10 +16,7 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String
     },
-    longitude:{
-        type:String
-    },
-    latitude:{
+    currentLocation:{
         type:String
     },
     isVerified:{

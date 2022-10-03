@@ -4,7 +4,7 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN
 const client = require('twilio')(accountSid, authToken) 
 
-const sendOtp = (Mobilenumber) =>
+const sendSms = (Mobilenumber) =>
   new Promise(async(resolve, reject) => {
 
     await client.verify.v2
@@ -26,4 +26,4 @@ const verifyOtp = (Mobilenumber, otp) =>
       .catch((err) => reject(err));
   });
 
-  module.exports={verifyOtp,sendOtp}
+  module.exports={verifyOtp,sendSms}

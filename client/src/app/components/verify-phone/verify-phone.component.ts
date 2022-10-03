@@ -9,8 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VerifyPhoneComponent implements OnInit {
 
-  title: string = 'Verify Phone'
-  path: string = 'verifyPhone'
+  title: string = 'Verify'
   side:string="verifyPhone"
   err!: string; 
   bar:boolean=false
@@ -24,7 +23,7 @@ export class VerifyPhoneComponent implements OnInit {
     this._authService.sentOtp(event)
     .subscribe({
       next:(v)=>{
-        localStorage.setItem('token',v.token)
+        localStorage.setItem('timeOut',v.token)
         this._router.navigate(['verifyOtp'])
         console.log(v)
       },

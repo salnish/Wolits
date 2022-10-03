@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  logo:string='logo'
+
+  constructor(private _router:Router) { }
 
   ngOnInit(): void {
+    console.log(this._router.url.split("/")[1])
+    console.log(this._router.url.split("/")[1].startsWith("partner"))
+    if(this._router.url.split("/")[1].startsWith("partner"))this.logo='partnerLogo'
   }
+
 
 }

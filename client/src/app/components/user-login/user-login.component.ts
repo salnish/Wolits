@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,18 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserLoginComponent implements OnInit {
 
-  title: string = 'OTP'
-  path: string = 'userRegister'
-  side:string="otp"
+  title: string = 'Login'
+  side:string="login"
   err!: string; 
   bar:boolean=false
-  constructor() { }
+  constructor(private _authService:AuthService,private _router:Router) { }
 
   ngOnInit(): void {
   }
 
   onLogin(event:any){
     console.log(event);
+    this._authService.authenticateUser(event)
+    .subscribe({
+      next:(v)=>{
+        localStorage.setItem('token',v.token)//store the the token
+        localStorage.setItem('refreshToken',v.refreshtoken)
+        localStorage.setItem('user',v.name)//store the user name
+        this._router.navigate(['landing'])//navigate the user to landing page
+        console.log(v)
+      },
+      error:(e)=>{
+        console.log(e)
+      }
+    })
     
   }
 

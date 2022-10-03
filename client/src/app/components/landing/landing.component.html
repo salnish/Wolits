@@ -1,9 +1,18 @@
+<app-header></app-header>
 <div class="container-fluid">
-    <app-header></app-header>
-    <div class="container-fluid">
-
-
-        <h1>sfhjksdadfjklsdfkjl</h1>
+    <button>dfkljdfjk</button>
+    <div>
+        <form (ngSubmit)="OnSubmit()" name="locationForm" [formGroup]="locationForm" class="search">
+            <button mat-icon-button (click)="detectLocation()" class="mx-2 mt-2"><mat-icon>location_searching</mat-icon></button>
+            <div class="locationInput">
+                <mat-form-field appearance="outline">
+                    <mat-label>Location</mat-label>
+                    <input formControlName="location" matInput placeholder="Enter Location" required>
+                </mat-form-field>
+            </div>
+            <button class="mx-3 mb-4 btn" mat-raised-button type="submit">Find</button>
+        </form>
+       
     </div>
-    <app-footer></app-footer>
 </div>
+<app-footer></app-footer>

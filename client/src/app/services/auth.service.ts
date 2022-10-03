@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -7,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   private _authUrl = "http://localhost:5000/api/user"
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private _router:Router ) { }
 
   sentOtp(phone:any){
     return this.http.post<any>(`${this._authUrl}/verifyNumber`,phone)
@@ -21,11 +22,55 @@ export class AuthService {
     return this.http.put<any>(`${this._authUrl}/register`,user)
   }
 
+  authenticateUser(user:any){
+    return this.http.post<any>(`${this._authUrl}`,user)
+  }
+
+  updateLocation(location:any){
+    return this.http.put<any>(`${this._authUrl}/updateLocation`,location)
+  }
+
+
+
   getToken(){
     return localStorage.getItem('token')
+  }
+
+  getRefreshToken(){
+     let refreshToken = localStorage.getItem('refreshToken')
+     return {refreshToken}
+  }
+
+  refreshAccess(){
+    console.log('jkdfhjkdsjf');
+    console.log(this.getRefreshToken());
+    
+    
+    return this.http.post<any>(`${this._authUrl}/refresh`,this.getRefreshToken())
+  }
+
+  getTimeOutToken(){
+    return localStorage.getItem('timeOut')
   }
 
   getAdminToken(){
     return localStorage.getItem('admin')
   }
+
+  loggedIn(){
+    return !!localStorage.getItem('token')
+  }
+
+ 
+
+  getUserName(){
+    return localStorage.getItem('user')
+  }
+
+  logoutUser() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    this._router.navigate([''])
+  }
+
 }

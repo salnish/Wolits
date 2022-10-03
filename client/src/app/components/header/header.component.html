@@ -1,11 +1,37 @@
 <mat-toolbar class="{{path}}">
+  <div fxShow="true" fxHide.gt-sm="true">
+    <button class="hamburger" mat-icon-button (click)="side=!side">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
     <span routerLink="/" class="img"></span>
     
     <span class="spacer"></span>
-    <button mat-raised-button class="mx-3 login"routerLink="/userLogin" *ngIf="path=='userRegister'||path=='landing' ||path=='verifyPhone'" aria-label="Example icon-button with heart icon">
-      Login
-    </button>
-    <button mat-raised-button class="mx-3 signup" routerLink="/verifyPhone"  *ngIf="path=='userLogin'||path=='landing'" aria-label="Example icon-button with share icon">
-      Sign Up
-    </button>
+    <div fxShow="true" fxHide.lt-md="true">
+      <button mat-raised-button class="mx-3 login"routerLink="/userLogin" *ngIf="(path=='userRegister'||path=='landing' ||path=='verifyPhone')&&!_authService.loggedIn()" aria-label="Example icon-button with heart icon">
+        Login <mat-icon>login</mat-icon>
+      </button>
+      <button mat-raised-button class="mx-3 signup" routerLink="/verifyPhone"  *ngIf="(path=='userLogin'||path=='landing')&&!_authService.loggedIn()" aria-label="Example icon-button with share icon">
+        Sign Up <mat-icon>person_add</mat-icon> 
+      </button>
+     
+      <button mat-stroked-button *ngIf="_authService.loggedIn()" [matMenuTriggerFor]="menu" class="mx-3" ><mat-icon>manage_accounts</mat-icon> {{_authService.getUserName()}}</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item><mat-icon>settings</mat-icon> Account Settings</button>
+        <button mat-menu-item (click)="_authService.logoutUser()"><mat-icon>logout</mat-icon> Logout</button>
+      </mat-menu>
+    </div>
+    
   </mat-toolbar>
+  <drop-bar fxLayout="column" *ngIf="side" fxHide.gt-sm="true" >
+    <button mat-button class="mx-3 login"routerLink="/userLogin" *ngIf="(path=='userRegister'||path=='landing' ||path=='verifyPhone')&&!_authService.loggedIn()" aria-label="Example icon-button with heart icon">
+     <mat-icon>login</mat-icon> Login
+    </button>
+    <button mat-button class="mx-3 signup" routerLink="/verifyPhone"  *ngIf="(path=='userLogin'||path=='landing')&&!_authService.loggedIn()" aria-label="Example icon-button with share icon">
+     <mat-icon>person_add</mat-icon> Sign Up
+    </button>
+    <button mat-button class="mx-3 signup"  *ngIf="_authService.loggedIn()" ><mat-icon>manage_accounts</mat-icon> {{_authService.getUserName()}}</button>
+    <button mat-button class="mx-3 signup" (click)="_authService.logoutUser()" *ngIf="_authService.loggedIn()" >
+     <mat-icon>logout</mat-icon> Logout
+    </button>
+  </drop-bar>

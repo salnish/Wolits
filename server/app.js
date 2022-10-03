@@ -8,6 +8,7 @@ const {errorHandler} = require("./middleware/errorMiddleware")
 const morgan = require("morgan");
 
 const userRouter =require('./routes/userRoute');
+const partnerRouter =require('./routes/partnerRoute')
 
 connectDB();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}))
 
 app.use('/api/user',userRouter);
+app.use('/api/partner',partnerRouter)
 
 
 

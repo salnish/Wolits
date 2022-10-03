@@ -10,11 +10,10 @@ import { Component, OnInit } from '@angular/core';
 export class UserRegisterComponent implements OnInit {
 
   
-  title: string = 'Register'
-  path: string = 'userRegister'
-  side:string="signup"
-  err!: string; 
-  bar:boolean=false
+  title: string = 'Register'//tittle for form
+  side:string="signup"//mention the side  for formGroup
+  err!: string; //Error message to display on form
+  bar:boolean=false //progress bar state
   constructor(private _authService:AuthService, private _router :Router) { }
 
   ngOnInit(): void {
@@ -25,9 +24,10 @@ export class UserRegisterComponent implements OnInit {
     this._authService.registerUser(event)
     .subscribe({
       next:(v)=>{
-        localStorage.setItem('token',v.token)
-        localStorage.setItem('user',v.user)
-        this._router.navigate(['landing'])
+        localStorage.removeItem('timeOut')
+        localStorage.setItem('token',v.token)//store the the token
+        localStorage.setItem('user',v.name)//store the user name
+        this._router.navigate(['landing'])//navigate the user to landing page
         console.log(v)
       },
       error:(e)=>{

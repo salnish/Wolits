@@ -11,7 +11,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class OtpVerifyComponent implements OnInit {
 
   title: string = 'Verify OTP '
-  path: string = 'verifyOtp'
   side:string="otp"
   err!: string; 
   bar:boolean=false
@@ -30,7 +29,7 @@ export class OtpVerifyComponent implements OnInit {
           this._snackbar.open(`OTP Expired , try again`,`OK`)
           this._router.navigate(['verifyPhone'])
         }else{
-          localStorage.setItem('token',v.token)
+          localStorage.setItem('timeOut',v.token)
           this._router.navigate(['userRegister'])
         }
       },

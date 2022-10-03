@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
-const { sendOtp, verifyOtp } = require("./twillioController");
+const { sendSms, verifyOtp } = require("./twillioController");
 
 //@Desc Sent Otp forverify phone number
 //@Route POST /api/user/verifyNumber
@@ -28,13 +28,13 @@ const sentOtp = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    sendOtp(phone)
+    sendSms(phone)
       .then((verification) => {
         console.log(verification);
         res.status(201).json({
           id: user.id,
           status: "OTP Send",
-          token: generateToken(user.id, 60 * 5),
+          token: generateToken(user.id, 60),
         });
       })
       .catch((err) => {
@@ -70,7 +70,7 @@ const verifyNumber = asyncHandler(async (req, res) => {
           res.status(201).json({
             id: user.id,
             isVerified: true,
-            token: generateToken(user.id, 60 *60),
+            token: generateToken(user.id, 60 * 60),
           });
         })
         .catch((err) => {
@@ -96,45 +96,91 @@ const registerUser = asyncHandler(async (req, res) => {
     { _id: id },
     {
       $set: {
-        name:name,
-        email:email,
-        isRegistered:true,
+        name: name,
+        email: email,
+        isRegistered: true,
         password: hashedPassword,
       },
     }
-  ).then((user)=>{
-    console.log(user);
-    res.status(200).json({
-        id:user.id,
-        name:user.name,
-        token:generateToken(user.id,60*60*24*3)
+  )
+    .then((user) => {
+      console.log(user);
+      res.status(200).json({
+        id: user.id,
+        name: name,
+        token: generateToken(user.id, 60 * 5),
+        refreshtoken: generateToken(user.id, 60 * 60 * 24),
+      });
     })
-  }).catch((err)=>{
-    console.log(err);
-    res.status(400)
-    throw new Error("register failed")
-  })
-
-
+    .catch((err) => {
+      console.log(err);
+      res.status(400);
+      throw new Error("register failed");
+    });
 });
 
-const loginUser= asyncHandler(async(req,res)=>{
-    const {phone,password}= req.body;
+//@Desc authenticate the user
+//@Route GET api/user/
+//@access public
+const loginUser = asyncHandler(async (req, res) => {
+  const { phone, password } = req.body;
 
-    //check for user phone
-    const user = await User.findOne({phone});
+  //check for user phone
+  const user = await User.findOne({ phone });
+  console.log(user);
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-        res.json({
-          _id: user.id,
-          email: user.email,
-          token: generateToKen(user.id),
-        });
-      } else {
-        res.status(400).send("Invalid credentials");
-      }
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.json({
+      _id: user.id,
+      name: user.name,
+      token: generateToken(user.id, 60 ),
+      refreshtoken: generateToken(user.id, 60 * 60 * 24),
+    });
+  } else {
+    res.status(400).send("Invalid credentials");
+  }
+});
 
-})
+//@Desc update current location
+//@Route PUT api/user/updateLocation
+//@access Protected
+const updateLocation = asyncHandler(async (req, res) => {
+  const { location } = req.body;
+  let id = mongoose.Types.ObjectId(req.user.id);
+  await User.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        currentLocation: location,
+      },
+    }
+  ).then((data) => {
+    res.status(200).json({
+      id: id,
+      updated: true,
+    });
+  }).catch((e)=>{
+    console.log(e)
+    res.status(400);
+    throw new Error('not updated')
+  })
+});
+
+//@Desc check the user
+//@Route GET api/user/isUser
+//@access protected
+const isUser = asyncHandler(async (req, res) => {
+  if (req.user) {
+    res.status(200).json({
+      id: req.user.id,
+      name: req.user.name,
+      userExists: true,
+    });
+  } else {
+    res.status(400);
+    throw new Error("UnAuthorised Entry");
+  }
+});
 
 //Generate Jwt
 const generateToken = (id, time) => {
@@ -146,5 +192,7 @@ module.exports = {
   sentOtp,
   verifyNumber,
   registerUser,
-  loginUser
+  loginUser,
+  isUser,
+  updateLocation
 };

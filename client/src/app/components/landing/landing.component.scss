@@ -1,4 +1,25 @@
 .container-fluid{
+    display: flex;
+    align-items: center;
     background-color: orange;
+    background-image: url('../../../assets/images/landing.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
     min-height: 100vh;
+    .btn{
+        background-color: black;
+        color: white    ;
+    }
+    .search{
+        display: flex;
+        justify-content: center;
+        margin-left: 200px;
+     
+    }
+   
+    .field{
+        margin: 0;
+        padding: 0;
+    }
 }
