@@ -10,8 +10,20 @@ export class PartnerAuthService {
   private _authUrl = "http://localhost:5000/api/partner"
   constructor(private http:HttpClient,private _router:Router) { }
 
-  sentOtp(phone:any){
+  sentOtp(phone:string){
     return this.http.post<any>(`${this._authUrl}/verifyNumber`,phone)
+  }
+
+  verifyNumber(otp: any) {
+    return this.http.put<any>(`${this._authUrl}/verifyOtp`, otp)
+  }
+
+  registerPartner(partner: any) {
+    return this.http.put<any>(`${this._authUrl}/register`, partner)
+  }
+
+  authenticatePartner(partner: any) {
+    return this.http.post<any>(`${this._authUrl}`, partner)
   }
 
 }

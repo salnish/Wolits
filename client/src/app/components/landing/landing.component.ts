@@ -1,13 +1,13 @@
 import { AuthService } from './../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit ,OnDestroy{
 
   constructor(private fb:FormBuilder, private _authService:AuthService) { }
 
@@ -15,6 +15,10 @@ export class LandingComponent implements OnInit {
     location:['',[Validators.required]]
   })
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(){
+    
   }
 
   OnSubmit(){

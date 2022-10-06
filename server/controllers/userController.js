@@ -133,8 +133,8 @@ const loginUser = asyncHandler(async (req, res) => {
     res.json({
       _id: user.id,
       name: user.name,
-      token: generateToken(user.id, 60 ),
-      refreshtoken: generateToken(user.id, 60 * 60 * 24),
+      token: generateToken(user.id, 30 ),
+      refreshtoken: generateToken(user.id, 60 ),
     });
   } else {
     res.status(400).send("Invalid credentials");

@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { catchError, observable, Observable, throwError } from 'rxjs';
+import { catchError, observable, Observable, throwError  } from 'rxjs';
 import { retry } from 'rxjs';
 
 @Injectable({
@@ -13,18 +13,22 @@ export class TokenInterceptorService implements HttpInterceptor {
   constructor(private injector: Injector, private _router: Router, private _authService :AuthService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  
+    return next.handle(this.tokenizedReq(req))
+      .pipe(
+        catchError((error: HttpErrorResponse) => this.errorHandler(error, req, next))
+      )
+  }
+
+  tokenizedReq(req:HttpRequest<any>){
     let authService = this.injector.get(AuthService)
     let route = this._router.url.split("/")[1]
     let tokenizedReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${route == 'partner' ? authService.getAdminToken() : route == 'landing' ? authService.getToken() : authService.getTimeOutToken()}`
+        Authorization: `Bearer ${route == 'partner' ? authService.getPartnerToken() : route == 'landing' ? authService.getToken() : authService.getTimeOutToken()}`
       }
     })
-    return next.handle(tokenizedReq)
-      .pipe(
-        retry(2),
-        catchError((error: HttpErrorResponse) => this.errorHandler(error, req, next))
-      )
+    return tokenizedReq
   }
 
   errorHandler(error: HttpErrorResponse, req: HttpRequest<any>, next: HttpHandler) {
@@ -33,34 +37,25 @@ export class TokenInterceptorService implements HttpInterceptor {
     if (error.error.message == 'jwt expired') {
       console.log('enter if expired');
       this.refreshAccessToken(req,next)
-      return throwError(() => error.error);
-
-    }else{
       
-      return throwError(() => error.error);
+      console.log(this.tokenizedReq(req))
+      return next.handle(this.tokenizedReq(req))
+
+    }else{  
+      return throwError(() => error.error.message);
     }
     
   }
 
   refreshAccessToken( req: HttpRequest<any>, next: HttpHandler){
-    this._authService.refreshAccess()
+   return this._authService.refreshAccess()
     .subscribe({
       next: (v) => { 
-        console.log(v);
-        
-        localStorage.setItem('token', v.token)
-        let route = this._router.url.split("/")[1]
-        let tokenizedReq = req.clone({
-          setHeaders: {
-            Authorization: `Bearer ${route == 'partner' ? this._authService.getAdminToken() : route == 'landing' ? this._authService.getToken() : this._authService.getTimeOutToken()}`
-          }
-        })
-        return next.handle(tokenizedReq)
-
+       this._authService.setTokens(v.token,v.refreshToken)
      
       }, error: (e:HttpErrorResponse) => {
-        console.log('dfjhhsdafjkhsdfhjkddshjkfsdhjkfdsahjk');
-        
+       
+        this._authService.logoutUser()
         return throwError(() => e.error);
 
       }

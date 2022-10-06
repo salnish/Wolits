@@ -1,6 +1,7 @@
 .container-fluid{
     display: flex;
     align-items: center;
+    padding-left: 10rem;
     background-color: orange;
     background-image: url('../../../assets/images/landing.png');
     background-repeat: no-repeat;
@@ -14,12 +15,54 @@
     .search{
         display: flex;
         justify-content: center;
-        margin-left: 200px;
+      
      
+    }
+    input{
+        background-color: transparent;
+        color: white;
     }
    
     .field{
         margin: 0;
         padding: 0;
     }
+
+
+   
+}
+
+@media (max-width:650px) {
+    .container-fluid{
+        display: flex;
+        align-items:flex-start;
+        padding: 1rem;
+        background-color:orange;
+        background-image: none;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: right;
+        min-height: 100vh;
+        .btn{
+            background-color: black;
+            color: white    ;
+        }
+        .search{
+            display: inline;
+          
+         
+        }
+        input{
+            background-color: transparent;
+            color: white;
+        }
+       
+        .field{
+            margin: 0;
+            padding: 0;
+        }
+    
+    
+       
+    }  
 }

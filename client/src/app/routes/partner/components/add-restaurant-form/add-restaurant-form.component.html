@@ -1,0 +1,139 @@
+<mat-card>
+    <div class="title">
+        <h2>Register your Restaurant here </h2>
+    </div>
+    <mat-card-content>
+        <form name="onboardingForm" (ngSubmit)="submitForm()" fxLayout="column" [formGroup]="onboardingForm">
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Restaurant Name</mat-label>
+                    <input formControlName="restaurantName" matInput placeholder="enter restaurent name" required />
+                    <mat-error>enter restaurant name</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Restaurant Locality</mat-label>
+                    <input formControlName="restaurantaLocality" matInput placeholder="enter restaurent name"
+                        required />
+                    <mat-error>Enter locality name</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Location longitude</mat-label>
+                    <input formControlName="locationLongitude" matInput placeholder="enter restaurent name" required />
+                    <mat-error>enter longitude</mat-error>
+                </mat-form-field>
+                <div>
+                    <mat-form-field class="lati" appearance="outline">
+                        <mat-label>Location latitude</mat-label>
+                        <input formControlName="locationLatitude" matInput placeholder="enter restaurent name"
+                            required />
+                        <mat-error>enter latitude</mat-error>
+                    </mat-form-field>
+
+                    <mat-icon>location_searching</mat-icon>
+
+                </div>
+
+            </div>
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Contact Number</mat-label>
+                    <input formControlName="contactNumber" matInput placeholder="enter restaurent name" required />
+                    <mat-error>Enter Contact Number</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <textarea formControlName="address" matInput placeholder="Enter your address" required
+                        matInput></textarea>
+                    <mat-error>Enter Contact Number</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Owner Name</mat-label>
+                    <input formControlName="ownerName" matInput placeholder="enter restaurent name" required />
+                    <mat-error>Enter owner name</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Owner Email</mat-label>
+                    <input formControlName="ownerEmail" matInput placeholder="enter restaurent name" required />
+                    <mat-error>Enter owner email</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Restaurant Type </mat-label>
+                    <input formControlName="restaurantType" matInput placeholder="enter restaurent name" required />
+                    <mat-error>Enter Restaurant Type</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Cuisine Type </mat-label>
+                    <input formControlName="cuisineType" matInput placeholder="enter restaurent name" required />
+                    <mat-error>Enter Cuisine Type</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Opening Time </mat-label>
+                    <input formControlName="openingTime" matInput placeholder="enter restaurent name" required />
+                    <mat-error>Enter Opening Time</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Closing Time </mat-label>
+                    <input formControlName="closingTime" matInput placeholder="enter restaurent name" required />
+                    <mat-error>Enter Closing Time</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Bank Account No.</mat-label>
+                    <input formControlName="bankAccountNo" matInput placeholder="enter restaurent name" required />
+                    <mat-error>Enter Bank account no</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>GST Tin No. </mat-label>
+                    <input formControlName="gstNo" matInput placeholder="enter restaurent name" required />
+                    <mat-error>Enter GST Tin No</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <div class="upload">
+                    <label>FSSAI license copy</label><br>
+                    <input (change)="getFile($event)" fxHide="true" id="fssaiFile" type="file" />
+                    <label for="fssaiFile" class="btn btn-primary label">
+                        <mat-icon>upload_file</mat-icon> Choose Files
+                    </label>
+                </div>
+                <div class="upload">
+                    <label>PAN card copy</label><br>
+                    <input (change)="getFile($event)"  fxHide="true" id="pancardFile" type="file" />
+                    <label for="pancardFile" class="btn btn-primary label">
+                        <mat-icon>upload_file</mat-icon> Choose Files
+                    </label>
+                </div>
+
+            </div>
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <div class="upload">
+                    <label>Bank passbook</label><br>
+                    <input (change)="getFile($event)"  fxHide="true" id="passbookFile" type="file" />
+                    <label for="passbookFile" class="btn btn-primary label">
+                        <mat-icon>upload_file</mat-icon> Choose Files
+                    </label>
+                </div>
+                <div class="upload">
+                    <label>Icon image</label><br>
+                    <input (change)="getFile($event)"  fxHide="true" id="iconFile" type="file" />
+                    <label for="iconFile" class="btn btn-primary label">
+                        <mat-icon>upload_file</mat-icon> Choose Files
+                    </label>
+                </div>
+
+            </div>
+            <button class="mx-3" mat-raised-button color="accent">Submit application</button>
+        </form>
+    </mat-card-content>
+
+</mat-card>

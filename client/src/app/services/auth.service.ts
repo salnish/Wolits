@@ -8,67 +8,73 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   private _authUrl = "http://localhost:5000/api/user"
-  constructor(private http:HttpClient,private _router:Router ) { }
+  constructor(private http: HttpClient, private _router: Router) { }
 
-  sentOtp(phone:any){
-    return this.http.post<any>(`${this._authUrl}/verifyNumber`,phone)
+  sentOtp(phone: any) {
+    return this.http.post<any>(`${this._authUrl}/verifyNumber`, phone)
   }
 
-  verifyNumber(otp:any){
-    return this.http.put<any>(`${this._authUrl}/verifyOtp`,otp)
+  verifyNumber(otp: any) {
+    return this.http.put<any>(`${this._authUrl}/verifyOtp`, otp)
   }
 
-  registerUser(user:any){
-    return this.http.put<any>(`${this._authUrl}/register`,user)
+  registerUser(user: any) {
+    return this.http.put<any>(`${this._authUrl}/register`, user)
   }
 
-  authenticateUser(user:any){
-    return this.http.post<any>(`${this._authUrl}`,user)
+  authenticateUser(user: any) {
+    return this.http.post<any>(`${this._authUrl}`, user)
   }
 
-  updateLocation(location:any){
-    return this.http.put<any>(`${this._authUrl}/updateLocation`,location)
+  updateLocation(location: any) {
+    return this.http.put<any>(`${this._authUrl}/updateLocation`, location)
   }
 
 
 
-  getToken(){
+  getToken() {
     return localStorage.getItem('token')
   }
 
-  getRefreshToken(){
-     let refreshToken = localStorage.getItem('refreshToken')
-     return {refreshToken}
+  getRefreshToken() {
+    let refreshToken = localStorage.getItem('refreshToken')
+    return { refreshToken }
   }
 
-  refreshAccess(){
+  setTokens(token: string, refresh: string) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('refreshToken', refresh)
+  }
+
+  refreshAccess() {
     console.log('jkdfhjkdsjf');
     console.log(this.getRefreshToken());
-    
-    
-    return this.http.post<any>(`${this._authUrl}/refresh`,this.getRefreshToken())
+
+
+    return this.http.post<any>(`${this._authUrl}/refresh`, this.getRefreshToken())
   }
 
-  getTimeOutToken(){
+  getTimeOutToken() {
     return localStorage.getItem('timeOut')
   }
 
-  getAdminToken(){
-    return localStorage.getItem('admin')
+  getPartnerToken() {
+    return localStorage.getItem('partner')
   }
 
-  loggedIn(){
+  loggedIn() {
     return !!localStorage.getItem('token')
   }
 
- 
 
-  getUserName(){
+
+  getUserName() {
     return localStorage.getItem('user')
   }
 
   logoutUser() {
     localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
     localStorage.removeItem('user')
     this._router.navigate([''])
   }

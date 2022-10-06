@@ -1,0 +1,145 @@
+$w-PartnerLogo:url('../../../assets/images/partnerLogoWhite.png');
+$b-PartnerLogo:url('../../../assets/images/partnerLogoBlack.png');
+.partner-Toolbar{
+    z-index: 100;
+    background-color: rgb(90, 109, 255);
+    .spacer {
+        flex: 1 1 auto;
+      }
+      h1{
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-weight: bold;
+      }
+}
+
+.fix{
+position: fixed;
+}
+
+.side{                                                                                                                             
+    width:20em;
+    height:auto;
+    background-color:gray;
+   ul{
+    height: max-content;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    li{
+        width: 100%;
+        text-align: center;
+    }
+   }
+   .btn{
+    text-align: left;
+    height: 4em;
+    width: 95%;
+    border-bottom: 1px solid black;
+   }
+}
+.pannel{
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+.logo{
+
+    background-color: black;
+    
+
+      .img{
+        background-position: center;
+        background-size: cover;
+        background-image:$w-PartnerLogo;
+        width: 10em;
+        height:3em;
+      }
+}
+
+
+.footer{
+    position: relative;
+    z-index: 120;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    width: 100%;
+    padding-left: 50px;
+    background-color: black;
+    font-size: 1rem;
+
+    .partnerLogo{
+        position: relative;
+        background-position: center;
+        background-size: cover;
+        background-image: url("../../../assets/images/partnerLogoWhite.png");
+        left: 0;
+        top: 15px;
+        width:9em;
+        height: 3em;
+    }
+
+    .terms{
+        float: right;
+    }
+    
+    a{
+        color: white;
+    }
+}
+
+.responsive-side{
+    position: fixed;
+    z-index: 110;
+    left: 0;
+    top: 0;
+    width:20em;
+    height: auto;
+    background-color: gray;
+    ul{
+        height: 100vh;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        li{
+            width: 100%;
+            text-align: center;
+        }
+       }
+       .btn{
+        text-align: left;
+        height: 4em;
+        width: 95%;
+        border-bottom: 1px solid black;
+       }
+
+       .cls{
+       color: white;
+       }
+}
+
+.content-body{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    min-height: 100vh;
+}
+
+
+@media (max-width:460px) {
+    .footer{
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 14rem;
+        width: 100%;
+        padding-left: 50px;
+        background-color: black;
+        font-size: 1rem;
+    }
+}

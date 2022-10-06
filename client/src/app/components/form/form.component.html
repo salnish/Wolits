@@ -127,6 +127,10 @@
         <p *ngIf="errorMsg" style="color: red;">{{errorMsg+"!"}}</p>
         <button class="submit my-2" mat-flat-button color="primary" type="submit">{{title}}</button>
       </form>
+      <div *ngIf="link" class="button-row">
+       <span>Already Registered </span>
+        <a routerLink="{{link}}" class="link">Login</a>
+      </div>
 
 
     </mat-card-content>

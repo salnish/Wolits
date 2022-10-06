@@ -16,8 +16,8 @@
     background-image: url("../../../assets/images/Logo-white.png");
     left: 0;
     top: 15px;
-    width:7em;
-    height: 2em;
+    width:10em;
+    height: 3em;
 }
 
 .partnerLogo{
@@ -27,8 +27,8 @@
     background-image: url("../../../assets/images/partnerLogoWhite.png");
     left: 0;
     top: 15px;
-    width:7em;
-    height: 2em;
+    width:9em;
+    height: 3em;
 }
 mat-icon{
     position: relative;
@@ -42,4 +42,18 @@ mat-icon{
 
 a{
     color: white;
+}
+
+@media (max-width:460px) {
+    .footer{
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 14rem;
+        width: 100%;
+        padding-left: 50px;
+        background-color: black;
+        font-size: 1rem;
+    }
 }

@@ -31,6 +31,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { OtpVerifyComponent } from './components/otp-verify/otp-verify.component';
 import { VerifyPhoneComponent } from './components/verify-phone/verify-phone.component';
 import { PartnerVerifyPhoneComponent } from './components/partner-verify-phone/partner-verify-phone.component';
+import { PartnerOtpVerifyComponent } from './components/partner-otp-verify/partner-otp-verify.component';
+import { PartnerRegisterComponent } from './components/partner-register/partner-register.component';
+import { PartnerLoginComponent } from './components/partner-login/partner-login.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,11 @@ import { PartnerVerifyPhoneComponent } from './components/partner-verify-phone/p
     NotFoundComponent,
     OtpVerifyComponent,
     VerifyPhoneComponent,
-    PartnerVerifyPhoneComponent
+    PartnerVerifyPhoneComponent,
+    PartnerOtpVerifyComponent,
+    PartnerRegisterComponent,
+    PartnerLoginComponent,
+  
   ],
   imports: [
     FormsModule,

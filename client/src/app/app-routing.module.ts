@@ -1,5 +1,7 @@
+import { PartnerOtpVerifyComponent } from './components/partner-otp-verify/partner-otp-verify.component';
+import { PartnerRegisterComponent } from './components/partner-register/partner-register.component';
+import { PartnerLoginComponent } from './components/partner-login/partner-login.component';
 import { PartnerVerifyPhoneComponent } from './components/partner-verify-phone/partner-verify-phone.component';
-import { HeaderComponent } from './components/header/header.component';
 import { OtpVerifyComponent } from './components/otp-verify/otp-verify.component';
 import { VerifyPhoneComponent } from './components/verify-phone/verify-phone.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
@@ -11,15 +13,24 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {path:'',redirectTo:'/landing',pathMatch:'full'},
-  {path:'head',component:HeaderComponent},
   {path:'landing',component:LandingComponent},
   {path:'verifyPhone',component:VerifyPhoneComponent},
   {path:'verifyOtp',component:OtpVerifyComponent},
   {path:'userRegister',component:UserRegisterComponent},
   {path:'userLogin',component:UserLoginComponent},
-
   //partner
   {path:'partnerVerify',component:PartnerVerifyPhoneComponent},
+  {path:'partnerOtp',component:PartnerOtpVerifyComponent},
+  {path:'partnerRegister',component:PartnerRegisterComponent},
+  {path:'partnerLogin',component:PartnerLoginComponent},
+  {
+    path:'partner',
+    loadChildren: ()=> 
+    import('./routes/partner/partner.module').then((m)=> m.PartnerModule)
+  },
+
+  
+ 
 
   //not found
   {path:'**', component:NotFoundComponent}

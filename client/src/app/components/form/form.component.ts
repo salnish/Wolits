@@ -17,6 +17,7 @@ export class FormComponent implements OnInit {
   @Input() side!:string
   @Input() errorMsg:string=''
   @Input() bar:boolean= false;
+  @Input() link!:string ;
   @Output() form:EventEmitter<any> = new EventEmitter()
 
 
