@@ -1,4 +1,4 @@
-<div class="content-body">
+<div *ngIf="showTable" class="content-body">
     <div fxLayout="row" fxHide.lt-sm="true">
         <button mat-raised-button color="accent" (click)="getRestaurants('approved')" class="mx-3 my-4">Approved
             Restaurant</button>
@@ -50,7 +50,7 @@
             <!-- Symbol Column -->
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
-                <td mat-cell *matCellDef="let element"> <button mat-flat-button color="primary">
+                <td mat-cell *matCellDef="let element"> <button mat-flat-button (click)="showApplication(element._id)" color="primary">
                         View Application
                     </button> </td>
             </ng-container>
@@ -69,4 +69,12 @@
 
 
     </mat-card>
+</div>
+<div class="content-body">
+    <app-view-restaurant-details
+    *ngIf="!showTable"
+    [restaurantId]="restaurantId"
+    (close)="onclose()"
+    >
+    </app-view-restaurant-details>
 </div>

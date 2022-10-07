@@ -31,8 +31,14 @@ export class OnboardPanelComponent implements OnInit {
   }
 
   showApplication(restaurantId: string) {
+    console.log(restaurantId);
+    
     this.showTable = !this.showTable;
     this.restaurantId = restaurantId;
+  }
+
+  onclose() {
+    this.showTable = !this.showTable
   }
 
 

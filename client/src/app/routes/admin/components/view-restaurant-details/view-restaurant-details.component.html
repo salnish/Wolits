@@ -1,1 +1,55 @@
-<p>view-restaurant-details works!</p>
+<mat-card>
+    <mat-card-content>
+        <div class="header">
+            <h1>{{ title | titlecase }}</h1>
+            <button class="btn" mat-flat-button (click)="closeDetails()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="app" fxLayout="column ">
+            <div >
+                <h4><span>Restaurant Name :</span> {{ app.restaurantName | titlecase }}</h4>
+              </div>
+              <div >
+                <h4><span>Restaurant locality :</span> {{ app.restaurantLocality | titlecase }}</h4>
+              </div>
+              <div >
+                <h4><span>Restaurant location :</span> {{ app.locationLongitude+","+app.locationLatitude}}</h4>
+              </div>
+              <div >
+                <h4><span>Contact number:</span> {{ app.contactNumber }}</h4>
+              </div>
+              <div >
+                <h4><span>Owner Name :</span> {{ app.ownerName | titlecase }}</h4>
+              </div>
+              <div >
+                <h4><span>Owner email :</span> {{ app.ownerEmail | titlecase }}</h4>
+              </div>
+              <div >
+                <h4><span>Restaurant type :</span> {{ app.restaurantType | titlecase }}</h4>
+              </div>
+              <div >
+                <h4><span>Cuisine type :</span> {{ app.cuisineType | titlecase }}</h4>
+              </div>
+              <div >
+                <h4><span>Timing :</span> {{ app.openingTime+"-"+app.closingTime }}</h4>
+              </div>
+              <div >
+                <h4><span>Bank Account No:</span> {{ app.bankAccountNo | titlecase }}</h4>
+              </div>
+              <div >
+                <h4><span>GST Tin No :</span> {{ app.gstNo | titlecase }}</h4>
+              </div>
+              <div >
+                <h4><span>Status :</span> {{ app.status | titlecase }}</h4>
+              </div>
+              <div >
+                <h4>
+                  <span>Submited On : </span> {{ app.createdAt | date: "medium" }}
+                </h4>
+              </div>
+             
+
+          </div>
+    </mat-card-content>
+</mat-card>
