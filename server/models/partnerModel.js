@@ -22,7 +22,6 @@ const partnerSchema = new mongoose.Schema({
     },
     restaurentName:{
         type:String,
-        unique:true
     },
     isVerified:{
         type:Boolean,

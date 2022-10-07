@@ -25,7 +25,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     let route = this._router.url.split("/")[1]
     let tokenizedReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${route == 'partner' ? authService.getPartnerToken() : route == 'landing' ? authService.getToken() : authService.getTimeOutToken()}`
+        Authorization: `Bearer ${route == 'admin' ? authService.getPartnerToken() : route == 'landing' ? authService.getToken() :route == 'partner' ? authService.getPartnerToken():authService.getTimeOutToken()}`
       }
     })
     return tokenizedReq

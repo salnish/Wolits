@@ -3,7 +3,9 @@ const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 const Partner = require("../models/partnerModel");
+const Restaurant = require("../models/restaurantModel");
 const { sendSms, verifyOtp } = require("./twillioController");
+const cloudinaryUploadImg = require("../utils/cloudinary");
 
 //@Desc sent OTP for verify phone number
 //@Route POST /api/partner/verifyNumber
@@ -27,22 +29,21 @@ const sentOtp = asyncHandler(async (req, res) => {
 
   if (partner) {
     sendSms(phone)
-    .then((verification) => {
-      console.log(verification);
-      res.status(201).json({
-        id: partner.id,
-        otpSend: true,
-        token: generateToken(partner.id, 60 * 5),
+      .then((verification) => {
+        console.log(verification);
+        res.status(201).json({
+          id: partner.id,
+          otpSend: true,
+          token: generateToken(partner.id, 60 * 5),
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400);
+        throw new Error("otp sending Failed");
       });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(400);
-      throw new Error("otp sending Failed");
-    });
   }
 });
-
 
 //@Desc verify phone number
 //@Route PUT /api/user/verifyOtp
@@ -115,43 +116,101 @@ const registerPartner = asyncHandler(async (req, res) => {
     });
 });
 
-
 //@Desc authenticate the user
 //@Route GET api/user/
 //@access public
 const loginPartner = asyncHandler(async (req, res) => {
-  const { phone, password } = req.body;
+  try {
+    const { phone, password } = req.body;
 
-  //check for user phone
-  const user = await Partner.findOne({ phone });
-  console.log(user);
+    //check for user phone
+    const partner = await Partner.findOne({ phone });
+    await bcrypt.compare(password, partner.password);
 
-  if (user && (await bcrypt.compare(password, user.password))) {
-    res.json({
-      _id: user.id,
-      token: generateToken(user.id, 60*60 ),
-      refreshtoken: generateToken(user.id, 60*60*24 ),
-    });
-  } else {
-    res.status(400).send("Invalid credentials");
+    if (partner.isAdmin) {
+      res.json({
+        _id: partner.id,
+        token: generateToken(partner.id, 60 * 60),
+        refreshtoken: generateToken(partner.id, 60 * 60 * 24),
+        isAdmin: partner.isAdmin,
+      });
+    } else {
+      res.json({
+        _id: partner.id,
+        token: generateToken(partner.id, 60 * 60),
+        refreshtoken: generateToken(partner.id, 60 * 60 * 24),
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400);
+    throw new Error("invalid Credentials");
   }
 });
 
+const postApplication = asyncHandler(async (req, res) => {
+  console.log(req.files);
+  console.log(req.body);
 
-const postApplication= asyncHandler(async(req,res)=>{
-  let id = mongoose.Types.ObjectId(req.partner.id);
-  if(req.body){
-    console.log(req.body.fssaiFile)
+  try {
+    let id = mongoose.Types.ObjectId(req.partner.id);
+    const fssaiFile = req.files.fssaiFile[0].path;
+    const pancardFile = req.files.pancardFile[0].path;
+    const passbookFile = req.files.passbookFile[0].path;
+    const iconFile = req.files.iconFile[0].path;
+    const image1 = await cloudinaryUploadImg(fssaiFile);
+    const image2 = await cloudinaryUploadImg(pancardFile);
+    const image3 = await cloudinaryUploadImg(passbookFile);
+    const image4 = await cloudinaryUploadImg(iconFile);
+    let data = {
+      partnerId: id,
+      fssaiFile: image1.url,
+      pancardFile: image2.url,
+      passbookFile: image3.url,
+      iconFile: image4.url,
+    };
+    const RestaurantData = { ...req.body, ...data };
+    console.log("dfkjdsfjkh");
+    const restaurent = await Restaurant.create(RestaurantData);
+    console.log("dfjkhdsahkjfdas");
+    await Partner.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          restaurentId: restaurent.id,
+          restaurentName: restaurent.restaurantName,
+        },
+      }
+    );
+
     res.status(200).json({
-      name:'updated',
-      status:true
-    })
-  }else{
-    res.status(400)
-    throw new Error('error')
+      status: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(401);
+    throw new Error("update failed");
   }
-  
-})
+});
+
+//@Desc GET Restaurant
+//Route GET api/partner/getForm
+//Access Protected
+const restaurantDetails = asyncHandler(async (req, res) => {
+  try {
+    let id = mongoose.Types.ObjectId(req.partner.id);
+    const restaurant = await Restaurant.findOne({ partnerId: id });
+    console.log(restaurant);
+    res.status(200).json({
+      restaurantData: restaurant,
+      status: restaurant.status,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(401);
+    throw new Error(error);
+  }
+});
 
 //Generate Jwt
 const generateToken = (id, time) => {
@@ -161,10 +220,10 @@ const generateToken = (id, time) => {
 };
 
 module.exports = {
-    sentOtp,
-    verifyNumber,
-    registerPartner,
-    loginPartner,
-    postApplication
-
+  sentOtp,
+  verifyNumber,
+  registerPartner,
+  loginPartner,
+  postApplication,
+  restaurantDetails,
 };

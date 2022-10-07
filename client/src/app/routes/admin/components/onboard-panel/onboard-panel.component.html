@@ -1,0 +1,72 @@
+<div class="content-body">
+    <div fxLayout="row" fxHide.lt-sm="true">
+        <button mat-raised-button color="accent" (click)="getRestaurants('approved')" class="mx-3 my-4">Approved
+            Restaurant</button>
+        <button mat-raised-button color="accent" (click)="getRestaurants('pending')" class="mx-3 my-4">Pending
+            Restaurant</button>
+        <button mat-raised-button color="accent" (click)="getRestaurants('rejected')" class="mx-3 my-4">Rejected
+            Restaurant</button>
+    </div>
+    <div fxHide.gt-xs="true">
+        <button mat-icon-button class="m-3" [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item  (click)="getRestaurants('approved')">Approved Restaurant</button>
+            <button mat-menu-item  (click)="getRestaurants('pending')">Pending Restaurant</button>
+            <button mat-menu-item  (click)="getRestaurants('rejected')">Rejected Restaurant</button>
+        </mat-menu>
+    </div>
+
+    <mat-card>
+
+        <table mat-table [dataSource]="dataSource">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element;let i=index"> {{i+1}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+                <ng-container class="none" matColumnDef="restaurantId">
+                    <th mat-header-cell *matHeaderCellDef> Restaurant Id </th>
+                    <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                </ng-container>
+           
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="restaurantName">
+                <th mat-header-cell *matHeaderCellDef>Restaurant Name</th>
+                <td mat-cell *matCellDef="let element"> {{element.restaurantName}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status</th>
+                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element"> <button mat-flat-button color="primary">
+                        View Application
+                    </button> </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+        </mat-paginator>
+
+
+
+
+
+
+
+    </mat-card>
+</div>

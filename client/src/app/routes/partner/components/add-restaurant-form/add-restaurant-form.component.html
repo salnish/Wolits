@@ -77,12 +77,12 @@
             <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
                 <mat-form-field appearance="outline">
                     <mat-label>Opening Time </mat-label>
-                    <input formControlName="openingTime" matInput placeholder="enter restaurent name" required />
+                    <input formControlName="openingTime"type="time" matInput placeholder="enter restaurent name" required />
                     <mat-error>Enter Opening Time</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Closing Time </mat-label>
-                    <input formControlName="closingTime" matInput placeholder="enter restaurent name" required />
+                    <input formControlName="closingTime" type="time"  matInput placeholder="enter restaurent name" required />
                     <mat-error>Enter Closing Time</mat-error>
                 </mat-form-field>
             </div>
@@ -130,8 +130,8 @@
                         <mat-icon>upload_file</mat-icon> Choose Files
                     </label>
                 </div>
-
             </div>
+            
             <button class="mx-3" mat-raised-button color="accent">Submit application</button>
         </form>
     </mat-card-content>

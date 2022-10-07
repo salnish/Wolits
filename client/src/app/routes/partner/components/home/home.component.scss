@@ -1,7 +1,14 @@
-.content-body{
-   
-    button{
-        font-weight: bold;
-    }
+.content-body {
+  button {
+    font-weight: bold;
+  }
 
+  mat-card {
+    text-align: center;
+    mat-icon {
+      font-size: 80px;
+      height: 80px;
+      width: 80px;
+    }
+  }
 }

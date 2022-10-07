@@ -25,7 +25,7 @@ export class PartnerLoginComponent implements OnInit {
       next:(v)=>{
         localStorage.setItem('partner',v.token)//store the the token
         localStorage.setItem('refreshToken',v.refreshtoken)
-        this._router.navigate(['partner'])//navigate the partner to partner route
+        v.isAdmin?this._router.navigate(['admin']):this._router.navigate(['partner'])//navigate the partner to partner route
         console.log(v)
       },
       error:(e)=>{

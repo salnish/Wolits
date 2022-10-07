@@ -13,10 +13,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
+
 import { PartnerRoutingModule } from './partner-routing.module';
 import { PartnerComponent } from './partner.component';
 import { HomeComponent } from './components/home/home.component';
 import { AddRestaurantFormComponent } from './components/add-restaurant-form/add-restaurant-form.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { AddRestaurantFormComponent } from './components/add-restaurant-form/add
     PartnerComponent,
     HomeComponent,
     AddRestaurantFormComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,

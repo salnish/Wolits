@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders ,} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -11,6 +11,11 @@ export class PartnerService {
   constructor(private http:HttpClient,private _router:Router) { }
 
   applyForRestaurant(form:any){
-    return this.http.post(`${this._partnerUrl}/applyForm`,form)
+ 
+    return this.http.post<any>(`${this._partnerUrl}/applyForm`,form)
+  }
+
+  getRestaurant(){
+    return this.http.get<any>(`${this._partnerUrl}/getForm`)
   }
 }

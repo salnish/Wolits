@@ -23,11 +23,11 @@ file!:string
     contactNumber:['',[Validators.required]],
     address:['',[Validators.required]],
     ownerName:['',[Validators.required]],
-    ownerEmail:['',[Validators.required]],
+    ownerEmail:['',[Validators.required,Validators.email]],
     restaurantType:['',[Validators.required]],
     cuisineType:['',[Validators.required]],
-    openingTime:['',[Validators.required]],
-    closingTime:['',[Validators.required]],
+    openingTime:['09:00',[Validators.required]],
+    closingTime:['22:00',[Validators.required]],
     gstNo:['',[Validators.required]],
     bankAccountNo:['',[Validators.required]],
     fssaiFile:['',[Validators.required]],
@@ -37,12 +37,21 @@ file!:string
   })
 
   submitForm(){
-    console.log(this.onboardingForm.controls['fssaiFile'].value)
+
+
+    
+    const formData = new FormData();
+    for (const property in this.onboardingForm.value) {
+      formData.append(`${property}`,this.onboardingForm.value[property])
+    }
+
+    console.log(this.onboardingForm.value)
     this.file=this.onboardingForm.controls['fssaiFile'].value
-    this._partnerService.applyForRestaurant(this.onboardingForm.value)
+    this._partnerService.applyForRestaurant(formData)
     .subscribe({
       next:(v)=>{
         console.log(v)
+        this._router.navigate(['partner'])
       },
       error:(e)=>{
         console.log(e)

@@ -28,6 +28,11 @@ const routes: Routes = [
     loadChildren: ()=> 
     import('./routes/partner/partner.module').then((m)=> m.PartnerModule)
   },
+  {
+    path:'admin',
+    loadChildren: ()=> 
+    import('./routes/admin/admin.module').then((m)=> m.AdminModule)
+  },
 
   
  

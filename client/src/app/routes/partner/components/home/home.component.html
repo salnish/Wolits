@@ -1,3 +1,11 @@
 <div class="content-body">
-    <button mat-raised-button routerLink="/partner/addRestaurant"><mat-icon>restaurant</mat-icon> Add Restaurant</button>
+    <button *ngIf="!pending&&!declined" mat-raised-button routerLink="/partner/addRestaurant"><mat-icon>restaurant</mat-icon> Add Restaurant</button>
+    <mat-card *ngIf="pending">
+        <h1>Your onboard request is under process !</h1>
+        <mat-icon>pending_actions</mat-icon>
+    </mat-card>
+    <mat-card *ngIf="declined">
+        <h1>Your onboarding request is declined !</h1>
+        <mat-icon>remove_circle_outline</mat-icon>
+    </mat-card>
 </div>
