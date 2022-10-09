@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
-const Partner = require("../models/partnerModel")
+const Partner = require("../models/partnerModel");
+const { generateToken } = require("../utils/jwt");
 
 const signupTimeOut = asyncHandler(async (req, res, next) => {
   let token;
@@ -22,7 +23,7 @@ const signupTimeOut = asyncHandler(async (req, res, next) => {
       next();
     } catch (error) {
       if (error.message == "jwt expired") {
-        console.log("hhhhhhhhhhhhhhhhhh")
+
         res.status(401);
         throw new Error(error.message);
       } else {
@@ -58,7 +59,7 @@ const partnerTimeOut = asyncHandler(async (req, res, next) => {
       next();
     } catch (error) {
       if (error.message == "jwt expired") {
-        console.log("hhhhhhhhhhhhhhhhhh")
+
         res.status(401);
         throw new Error(error.message);
       } else {
@@ -75,38 +76,34 @@ const partnerTimeOut = asyncHandler(async (req, res, next) => {
   }
 });
 
-const refreshAccessToken= asyncHandler(async(req,res,next)=>{
-  console.log(req.body)
-  const {refreshToken}=req.body
+const refreshAccessToken = asyncHandler(async (req, res, next) => {
+  console.log(req.body);
+  const { refreshToken } = req.body;
   let token;
-  if (
-    refreshToken
-  ) {
-    try{
-       //Get token from header
-       token = refreshToken
+  if (refreshToken) {
+    try {
+      //Get token from header
+      token = refreshToken;
 
-       //Verify token
-       const decoded = jwt.verify(token, process.env.JWT_SECRET);
- 
-       //Get user from the token
-       let user = await User.findById(decoded.id).select("-password")
+      //Verify token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-       if (user){
-        console.log('djhkdjhfdjhdsfhjsda')
+      //Get user from the token
+      let user = await User.findById(decoded.id).select("-password");
+
+      if (user) {
         res.status(200).json({
-          refresh:true,
-          token:generateToken(user.id,30),
-          refreshToken:generateToken(user.id,60)
-        })
-       }
-    }catch(error){
+          refresh: true,
+          token: generateToken(user.id, 30),
+          refreshToken: generateToken(user.id, 60),
+        });
+      }
+    } catch (error) {
       res.status(401);
-        throw new Error("Unauthorised");
-
+      throw new Error("Unauthorised");
     }
   }
-})
+});
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
@@ -122,12 +119,11 @@ const protect = asyncHandler(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       //Get user from the token
-      req.user = await User.findById(decoded.id).select("-password")
+      req.user = await User.findById(decoded.id).select("-password");
 
       next();
     } catch (error) {
       if (error.message == "jwt expired") {
-        console.log("hhhhhhhhhhhhhhhhhh")
         res.status(401);
         throw new Error(error.message);
       } else {
@@ -145,7 +141,6 @@ const protect = asyncHandler(async (req, res, next) => {
 });
 
 const partnerProtect = asyncHandler(async (req, res, next) => {
- 
   let token;
   if (
     req.headers.authorization &&
@@ -159,12 +154,11 @@ const partnerProtect = asyncHandler(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       //Get user from the token
-      req.partner = await Partner.findById(decoded.id).select("-password")
+      req.partner = await Partner.findById(decoded.id).select("-password");
 
       next();
     } catch (error) {
       if (error.message == "jwt expired") {
-        console.log("hhhhhhhhhhhhhhhhhh")
         res.status(401);
         throw new Error(error.message);
       } else {
@@ -182,7 +176,6 @@ const partnerProtect = asyncHandler(async (req, res, next) => {
 });
 
 const protectAdmin = asyncHandler(async (req, res, next) => {
- 
   let token;
   if (
     req.headers.authorization &&
@@ -196,17 +189,17 @@ const protectAdmin = asyncHandler(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       //Get user from the token
-      req.admin = await Partner.findOne({_id:decoded.id,isAdmin:true}).select("-password")
-
+      req.admin = await Partner.findOne({
+      $and: { _id: decoded.id,
+        isAdmin: true}
+      }).select("-password");
 
       next();
     } catch (error) {
       if (error.message == "jwt expired") {
-        console.log("hhhhhhhhhhhhhhhhhh")
         res.status(401);
         throw new Error(error.message);
       } else {
-        console.log(error.message);
         res.status(401);
         throw new Error("Not authorised");
       }
@@ -220,12 +213,11 @@ const protectAdmin = asyncHandler(async (req, res, next) => {
 });
 
 
-
-//Generate Jwt
-const generateToken = (id, time) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: time,
-  });
+module.exports = {
+  signupTimeOut,
+  partnerTimeOut,
+  protect,
+  refreshAccessToken,
+  partnerProtect,
+  protectAdmin,
 };
-
-module.exports = { signupTimeOut ,partnerTimeOut, protect,refreshAccessToken, partnerProtect,protectAdmin};

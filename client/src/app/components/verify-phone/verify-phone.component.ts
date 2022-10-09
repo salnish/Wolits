@@ -23,7 +23,7 @@ export class VerifyPhoneComponent implements OnInit {
     this._authService.sentOtp(event)
     .subscribe({
       next:(v)=>{
-        localStorage.setItem('timeOut',v.token)
+        localStorage.setItem('token',v.token)
         this._router.navigate(['verifyOtp'])
         console.log(v)
       },

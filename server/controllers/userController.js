@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
 const { sendSms, verifyOtp } = require("./twillioController");
+const { generateToken } = require("../utils/jwt");
 
 //@Desc Sent Otp forverify phone number
 //@Route POST /api/user/verifyNumber
@@ -30,11 +31,9 @@ const sentOtp = asyncHandler(async (req, res) => {
   if (user) {
     sendSms(phone)
       .then((verification) => {
-        console.log(verification);
         res.status(201).json({
-          id: user.id,
           status: "OTP Send",
-          token: generateToken(user.id, 60),
+          token: generateToken(user.id, '60s'),
         });
       })
       .catch((err) => {
@@ -58,9 +57,8 @@ const verifyNumber = asyncHandler(async (req, res) => {
   console.log(req.user);
   if (user.isVerified) {
     res.status(201).json({
-      id: user.id,
       isVerified: true,
-      token: generateToken(user.id, 60 * 5),
+      token: generateToken(user.id, '5m'),
     });
   } else {
     verifyOtp(user.phone, otp).then(async (checkStatus) => {
@@ -70,7 +68,7 @@ const verifyNumber = asyncHandler(async (req, res) => {
           res.status(201).json({
             id: user.id,
             isVerified: true,
-            token: generateToken(user.id, 60 * 60),
+            token: generateToken(user.id,'5m'),
           });
         })
         .catch((err) => {
@@ -106,10 +104,9 @@ const registerUser = asyncHandler(async (req, res) => {
     .then((user) => {
       console.log(user);
       res.status(200).json({
-        id: user.id,
         name: name,
-        token: generateToken(user.id, 60 * 5),
-        refreshtoken: generateToken(user.id, 60 * 60 * 24),
+        token: generateToken(user.id, '1h'),
+        refreshToken: generateToken(user.id, '2h'),
       });
     })
     .catch((err) => {
@@ -131,10 +128,9 @@ const loginUser = asyncHandler(async (req, res) => {
 
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
-      _id: user.id,
       name: user.name,
-      token: generateToken(user.id, 30 ),
-      refreshtoken: generateToken(user.id, 60 ),
+      token: generateToken(user.id, '1h'),
+      refreshToken: generateToken(user.id, '2h'),
     });
   } else {
     res.status(400).send("Invalid credentials");
@@ -154,16 +150,18 @@ const updateLocation = asyncHandler(async (req, res) => {
         currentLocation: location,
       },
     }
-  ).then((data) => {
-    res.status(200).json({
-      id: id,
-      updated: true,
+  )
+    .then((data) => {
+      res.status(200).json({
+        id: id,
+        updated: true,
+      });
+    })
+    .catch((e) => {
+      console.log(e);
+      res.status(400);
+      throw new Error("not updated");
     });
-  }).catch((e)=>{
-    console.log(e)
-    res.status(400);
-    throw new Error('not updated')
-  })
 });
 
 //@Desc check the user
@@ -182,17 +180,11 @@ const isUser = asyncHandler(async (req, res) => {
   }
 });
 
-//Generate Jwt
-const generateToken = (id, time) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: time,
-  });
-};
 module.exports = {
   sentOtp,
   verifyNumber,
   registerUser,
   loginUser,
   isUser,
-  updateLocation
+  updateLocation,
 };

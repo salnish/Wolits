@@ -6,6 +6,7 @@ const Partner = require("../models/partnerModel");
 const Restaurant = require("../models/restaurantModel");
 const { sendSms, verifyOtp } = require("./twillioController");
 const cloudinaryUploadImg = require("../utils/cloudinary");
+const { generateToken } = require("../utils/jwt");
 
 //@Desc sent OTP for verify phone number
 //@Route POST /api/partner/verifyNumber
@@ -34,7 +35,7 @@ const sentOtp = asyncHandler(async (req, res) => {
         res.status(201).json({
           id: partner.id,
           otpSend: true,
-          token: generateToken(partner.id, 60 * 5),
+          token: generateToken(partner.id, "5m"),
         });
       })
       .catch((err) => {
@@ -57,7 +58,7 @@ const verifyNumber = asyncHandler(async (req, res) => {
     res.status(201).json({
       id: user.id,
       isVerified: true,
-      token: generateToken(user.id, 60 * 5),
+      token: generateToken(user.id, "5m"),
     });
   } else {
     verifyOtp(user.phone, otp).then(async (checkStatus) => {
@@ -67,7 +68,7 @@ const verifyNumber = asyncHandler(async (req, res) => {
           res.status(201).json({
             id: user.id,
             isVerified: true,
-            token: generateToken(user.id, 60 * 60),
+            token: generateToken(user.id, "5m"),
           });
         })
         .catch((err) => {
@@ -100,13 +101,13 @@ const registerPartner = asyncHandler(async (req, res) => {
       },
     }
   )
-    .then((user) => {
-      console.log(user);
+    .then((partner) => {
+      console.log(partner);
       res.status(200).json({
         id: user.id,
         name: name,
-        token: generateToken(user.id, 60 * 5),
-        refreshtoken: generateToken(user.id, 60 * 60 * 24),
+        token: generateToken(partner.id, "1h"),
+        refreshToken: generateToken(partner.id, "2h"),
       });
     })
     .catch((err) => {
@@ -125,54 +126,72 @@ const loginPartner = asyncHandler(async (req, res) => {
 
     //check for user phone
     const partner = await Partner.findOne({ phone });
-    await bcrypt.compare(password, partner.password);
-
-    if (partner.isAdmin) {
-      res.json({
-        _id: partner.id,
-        token: generateToken(partner.id, 60 * 60),
-        refreshtoken: generateToken(partner.id, 60 * 60 * 24),
-        isAdmin: partner.isAdmin,
-      });
-    } else {
-      res.json({
-        _id: partner.id,
-        token: generateToken(partner.id, 60 * 60),
-        refreshtoken: generateToken(partner.id, 60 * 60 * 24),
-      });
+    if(!partner){
+      throw new Error('User not registered! please signup')
     }
+    const match =await bcrypt.compare(password, partner.password)
+   if(!match){
+    throw new Error('Incorrect password')
+   }
+   
+      if (partner.isAdmin) {
+        res.json({
+          id: partner.id,
+          token: generateToken(partner.id, "1h"),
+          refreshToken: generateToken(partner.id, "2h"),
+          isAdmin: partner.isAdmin,
+        });
+      } else {
+        res.json({
+          name: partner.name,
+          token: generateToken(partner.id, "1h"),
+          refreshToken: generateToken(partner.id, "2h"),
+        });
+      }
+   
+
+
+
+    
   } catch (error) {
     console.log(error);
     res.status(400);
-    throw new Error("invalid Credentials");
+    throw new Error(error);
   }
 });
 
+//@Desc post application for onboard restaurent
+//Route POST api/partner/applyForm
+//Access protected
 const postApplication = asyncHandler(async (req, res) => {
-  console.log(req.files);
-  console.log(req.body);
-
   try {
     let id = mongoose.Types.ObjectId(req.partner.id);
-    const fssaiFile = req.files.fssaiFile[0].path;
-    const pancardFile = req.files.pancardFile[0].path;
-    const passbookFile = req.files.passbookFile[0].path;
-    const iconFile = req.files.iconFile[0].path;
-    const image1 = await cloudinaryUploadImg(fssaiFile);
-    const image2 = await cloudinaryUploadImg(pancardFile);
-    const image3 = await cloudinaryUploadImg(passbookFile);
-    const image4 = await cloudinaryUploadImg(iconFile);
+
+    //upload the files to cloudinary an get the url
+    const fssaiFile = await cloudinaryUploadImg(req.files.fssaiFile[0].path);
+    const pancardFile = await cloudinaryUploadImg(
+      req.files.pancardFile[0].path
+    );
+    const passbookFile = await cloudinaryUploadImg(
+      req.files.passbookFile[0].path
+    );
+    const iconFile = await cloudinaryUploadImg(req.files.iconFile[0].path);
+
+    //create an object to add with req.body
     let data = {
       partnerId: id,
-      fssaiFile: image1.url,
-      pancardFile: image2.url,
-      passbookFile: image3.url,
-      iconFile: image4.url,
+      fssaiFile: fssaiFile.url,
+      pancardFile: pancardFile.url,
+      passbookFile: passbookFile.url,
+      iconFile: iconFile.url,
     };
+    //combine the image url and partner id with req.body
     const RestaurantData = { ...req.body, ...data };
-    console.log("dfkjdsfjkh");
+
+    //create restaurant document for the respected partner
     const restaurent = await Restaurant.create(RestaurantData);
-    console.log("dfjkhdsahkjfdas");
+
+    //update the partner document with restaurant details
     await Partner.findByIdAndUpdate(
       { _id: id },
       {
@@ -183,11 +202,11 @@ const postApplication = asyncHandler(async (req, res) => {
       }
     );
 
-    res.status(200).json({
+    //response create status
+    res.status(201).json({
       status: true,
     });
   } catch (error) {
-    console.log(error);
     res.status(401);
     throw new Error("update failed");
   }
@@ -199,8 +218,10 @@ const postApplication = asyncHandler(async (req, res) => {
 const restaurantDetails = asyncHandler(async (req, res) => {
   try {
     let id = mongoose.Types.ObjectId(req.partner.id);
+
+    //find restaurant that matches the partner
     const restaurant = await Restaurant.findOne({ partnerId: id });
-    console.log(restaurant);
+
     res.status(200).json({
       restaurantData: restaurant,
       status: restaurant.status,
@@ -211,13 +232,6 @@ const restaurantDetails = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
-
-//Generate Jwt
-const generateToken = (id, time) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: time,
-  });
-};
 
 module.exports = {
   sentOtp,

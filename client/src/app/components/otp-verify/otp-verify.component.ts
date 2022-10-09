@@ -29,12 +29,13 @@ export class OtpVerifyComponent implements OnInit {
           this._snackbar.open(`OTP Expired , try again`,`OK`)
           this._router.navigate(['verifyPhone'])
         }else{
-          localStorage.setItem('timeOut',v.token)
+          localStorage.setItem('token',v.token)
           this._router.navigate(['userRegister'])
         }
       },
       error:(e)=>{
         console.log(e)
+        this.err=e
       }
     })
   }

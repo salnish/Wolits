@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import { PartnerAuthService } from './../../services/partner-auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,7 @@ export class PartnerRegisterComponent implements OnInit {
   side:string="signup"//mention the side  for formGroup
   err!: string; //Error message to display on form
   bar:boolean=false //progress bar state
-  constructor(private _authService:PartnerAuthService, private _router :Router) { }
+  constructor(private _auth:AuthService,private _authService:PartnerAuthService, private _router :Router) { }
 
   ngOnInit(): void {
   }
@@ -23,14 +24,14 @@ export class PartnerRegisterComponent implements OnInit {
     this._authService.registerPartner(event)
     .subscribe({
       next:(v)=>{
-        localStorage.removeItem('timeOut')
-        localStorage.setItem('token',v.token)//store the the token
-        localStorage.setItem('user',v.name)//store the user name
+        this._auth.setTokens(v.token,v.refreshToken)
+        localStorage.setItem('partner',v.name)//store the user name
         this._router.navigate(['partner'])//navigate the user to landing page
         console.log(v)
       },
       error:(e)=>{
         console.log(e)
+        this.err=e
       }
     })
     

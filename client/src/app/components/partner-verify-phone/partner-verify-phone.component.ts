@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./partner-verify-phone.component.scss']
 })
 export class PartnerVerifyPhoneComponent implements OnInit {
-  title: string = 'Verify Partner'
+  title: string = 'Partner Signup'
   side:string="verifyPhone"
   err!: string; 
   link:string="/partnerLogin"
@@ -22,8 +22,8 @@ export class PartnerVerifyPhoneComponent implements OnInit {
     console.log(event)
     this._authService.sentOtp(event)
     .subscribe({
-      next:(v)=>{
-        localStorage.setItem('timeOut',v.token)
+      next:(v)=>{ 
+        localStorage.setItem('token',v.token)
         this._router.navigate(['/partnerOtp'])
         console.log(v)
       },

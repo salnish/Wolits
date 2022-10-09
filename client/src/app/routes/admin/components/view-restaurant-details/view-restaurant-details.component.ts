@@ -35,6 +35,18 @@ export class ViewRestaurantDetailsComponent implements OnInit {
     this.close.emit()
 
   }
+
+  updateStatus(formId:string,status:string){
+    this._adminService.updateOnboardStatus(formId,status)
+    .subscribe({
+      next:(v)=>{
+        console.log(v)
+      },
+      error:(e)=>{
+        console.log(e)
+      }
+    })
+  }
   
 
 }

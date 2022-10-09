@@ -24,8 +24,7 @@ export class UserRegisterComponent implements OnInit {
     this._authService.registerUser(event)
     .subscribe({
       next:(v)=>{
-        localStorage.removeItem('timeOut')
-        localStorage.setItem('token',v.token)//store the the token
+        this._authService.setTokens(v.token,v.refreshToken)
         localStorage.setItem('user',v.name)//store the user name
         this._router.navigate(['landing'])//navigate the user to landing page
         console.log(v)

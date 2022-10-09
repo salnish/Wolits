@@ -18,4 +18,12 @@ export class AdminService {
   getRestaurantDetails(restaurantId: string) {
     return this.http.get<any>(`${this._adminUrl}/restaurantDetails/${restaurantId}`)
   }
+
+  updateOnboardStatus(formId:string,status:string){
+    let data={
+      formId,
+      status,
+    }
+    return this.http.put<any>(`${this._adminUrl}/updateOnboard`,data)
+  }
 }

@@ -47,10 +47,6 @@ export class AuthService {
   }
 
   refreshAccess() {
-    console.log('jkdfhjkdsjf');
-    console.log(this.getRefreshToken());
-
-
     return this.http.post<any>(`${this._authUrl}/refresh`, this.getRefreshToken())
   }
 
@@ -58,9 +54,7 @@ export class AuthService {
     return localStorage.getItem('timeOut')
   }
 
-  getPartnerToken() {
-    return localStorage.getItem('partner')
-  }
+  
 
   loggedIn() {
     return !!localStorage.getItem('token')

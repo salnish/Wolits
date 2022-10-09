@@ -29,12 +29,13 @@ export class PartnerOtpVerifyComponent implements OnInit {
           this._snackbar.open(`OTP Expired , try again`,`OK`)
           this._router.navigate(['partnerVerify'])
         }else{
-          localStorage.setItem('timeOut',v.token)
+          localStorage.setItem('token',v.token)
           this._router.navigate(['partnerRegister'])
         }
       },
       error:(e)=>{
         console.log(e)
+        this.err=e
       }
     })
   }
