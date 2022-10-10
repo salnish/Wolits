@@ -29,8 +29,7 @@ export class VerifyPhoneComponent implements OnInit {
       },
       error:(e)=>{
         console.log(e);
-        
-        console.log('djdjdjdjdj')
+        this.err=e.split(':')[1]
       }
     })
     

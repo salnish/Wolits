@@ -7,8 +7,8 @@
             <div >
                 <ul>
                     <li ><button class="btn" routerLink="/partner/home" mat-button><mat-icon>dashboard</mat-icon> Dashboard</button></li>
-                    <li ><button class="btn" mat-button><mat-icon>store</mat-icon> Order management</button></li>
-                    <li ><button class="btn" mat-button><mat-icon>restaurant</mat-icon> Menu management</button></li>
+                    <li ><button class="btn"  mat-button><mat-icon>store</mat-icon> Order management</button></li>
+                    <li ><button class="btn" routerLink="/partner/menuManage" mat-button><mat-icon>restaurant</mat-icon> Menu management</button></li>
                     <li ><button class="btn" mat-button><mat-icon>local_offer</mat-icon> Offers</button></li>
                     <li ><button class="btn" mat-button><mat-icon>support</mat-icon> Help</button></li>
                   
@@ -27,9 +27,10 @@
             </div>
             <h1>Partner Dashboard</h1>
             <span class="spacer"></span>
-           <div> <button mat-icon-button><mat-icon>notifications</mat-icon></button></div>
+           <div> <button fxHide.lt-md="true" mat-icon-button><mat-icon>notifications</mat-icon></button></div>
+           <div> <button fxHide.lt-md="true" (click)="_authService.logoutPartner()" mat-icon-button><mat-icon>logout</mat-icon></button></div>
         </mat-toolbar>
-        <div>
+        <div class="pos">
             <div class="content-body">
                 <router-outlet></router-outlet>
             </div>
@@ -64,12 +65,13 @@
     </mat-toolbar>
     <div>
         <ul>
-            <li ><button class="btn" mat-button><mat-icon>dashboard</mat-icon> Dashboard</button></li>
+            <li ><button class="btn"  routerLink="/partner/home" mat-button><mat-icon>dashboard</mat-icon> Dashboard</button></li>
             <li ><button class="btn" mat-button><mat-icon>store</mat-icon> Orders</button></li>
-            <li ><button class="btn" mat-button><mat-icon>restaurant</mat-icon> Menu management</button></li>
+            <li ><button class="btn"  routerLink="/partner/menuManage" mat-button><mat-icon>restaurant</mat-icon> Menu management</button></li>
             <li ><button class="btn" mat-button><mat-icon>local_offer</mat-icon> Offers</button></li>
             <li ><button class="btn" mat-button><mat-icon>support</mat-icon> Help</button></li>
-          
+            <li ><button class="btn" mat-button><mat-icon>notifications</mat-icon> Notifications</button></li>
+            <li ><button class="btn"  (click)="_authService.logoutPartner()" mat-button><mat-icon>logout</mat-icon> Logout</button></li>
         </ul>
     </div>
 </div>

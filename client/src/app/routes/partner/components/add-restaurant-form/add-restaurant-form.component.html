@@ -1,4 +1,7 @@
 <mat-card>
+    <div class="bar">
+        <mat-spinner *ngIf="bar"></mat-spinner>
+      </div>
     <div class="title">
         <h2>Register your Restaurant here </h2>
     </div>
@@ -31,7 +34,7 @@
                         <mat-error>enter latitude</mat-error>
                     </mat-form-field>
 
-                    <mat-icon>location_searching</mat-icon>
+                    <mat-icon (click)="detect()">location_searching</mat-icon>
 
                 </div>
 
@@ -132,7 +135,7 @@
                 </div>
             </div>
             
-            <button class="mx-3" mat-raised-button color="accent">Submit application</button>
+            <button class="mx-3" (submit)="onboardingForm" mat-raised-button color="accent">Submit application</button>
         </form>
     </mat-card-content>
 

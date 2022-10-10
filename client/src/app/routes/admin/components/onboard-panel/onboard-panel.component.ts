@@ -39,6 +39,7 @@ export class OnboardPanelComponent implements OnInit {
 
   onclose() {
     this.showTable = !this.showTable
+    this.getRestaurants('approved')
   }
 
 

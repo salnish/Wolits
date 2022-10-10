@@ -47,6 +47,7 @@ export class LandingComponent implements OnInit ,OnDestroy{
       let latitude= x.coords.latitude;
       let longitude=x.coords.longitude;
       console.log(x);
+      this.locationForm.controls['location'].setValue(latitude+","+longitude)
       
       localStorage.setItem("location",latitude+","+longitude)
     })

@@ -30,6 +30,7 @@ export class UserLoginComponent implements OnInit {
       },
       error:(e)=>{
         console.log(e)
+        this.err=e;
       }
     })
     

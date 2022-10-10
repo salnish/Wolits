@@ -24,7 +24,6 @@ export class PartnerLoginComponent implements OnInit {
     this._authService.authenticatePartner(event)
       .subscribe({
         next: (v) => {
-          localStorage.setItem('partner',v.id)
           this._auth.setTokens(v.token,v.refreshToken)
           v.isAdmin ?localStorage.setItem('id',v.id):localStorage.setItem('partner',v.name)//store the user name
           v.isAdmin ? this._router.navigate(['admin']) : this._router.navigate(['partner'])//navigate the partner to partner route
@@ -35,6 +34,5 @@ export class PartnerLoginComponent implements OnInit {
           this.err=e.split(':')[1]
         }
       })
-
   }
 }

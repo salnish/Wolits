@@ -35,7 +35,7 @@ export class OtpVerifyComponent implements OnInit {
       },
       error:(e)=>{
         console.log(e)
-        this.err=e
+        this.err=e.split(':')[1]
       }
     })
   }

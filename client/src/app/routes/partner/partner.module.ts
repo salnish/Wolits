@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,6 +12,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 import { PartnerRoutingModule } from './partner-routing.module';
@@ -19,6 +20,8 @@ import { PartnerComponent } from './partner.component';
 import { HomeComponent } from './components/home/home.component';
 import { AddRestaurantFormComponent } from './components/add-restaurant-form/add-restaurant-form.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MenuMangementComponent } from './components/menu-mangement/menu-mangement.component';
+
 
 
 @NgModule({
@@ -27,6 +30,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     HomeComponent,
     AddRestaurantFormComponent,
     DashboardComponent,
+    MenuMangementComponent
+
   ],
   imports: [
     CommonModule,
@@ -35,7 +40,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     FormsModule,
     ReactiveFormsModule,
 
-    
+
     MatToolbarModule,
     MatIconModule,
     MatInputModule,
@@ -45,6 +50,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatProgressBarModule,
     MatSnackBarModule,
     MatSidenavModule,
+    MatProgressSpinnerModule
+
   ]
 })
 export class PartnerModule { }

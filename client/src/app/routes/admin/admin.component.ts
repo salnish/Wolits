@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -10,7 +11,7 @@ export class AdminComponent implements OnInit {
   side:boolean= false;
   side1:boolean= false;
   title:string= 'Admin Dashboard'
-  constructor() { }
+  constructor(public _authService:AuthService) { }
 
   ngOnInit(): void {
   }

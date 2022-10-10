@@ -1,3 +1,5 @@
+import { MenuMangementComponent } from './components/menu-mangement/menu-mangement.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AddRestaurantFormComponent } from './components/add-restaurant-form/add-restaurant-form.component';
 import { HomeComponent } from './components/home/home.component';
 import { PartnerComponent } from './partner.component';
@@ -10,6 +12,8 @@ const routes: Routes = [{
   children:[
     {path:'home',component:HomeComponent},
     {path:'addRestaurant',component:AddRestaurantFormComponent},
+    {path:'dashboard',component:DashboardComponent},
+    {path:'menuManage',component:MenuMangementComponent},
     { path: '', redirectTo: '/partner/home', pathMatch: 'full' }
   ]
 }];

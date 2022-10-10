@@ -11,39 +11,53 @@ const { generateToken } = require("../utils/jwt");
 //@Access Public
 const sentOtp = asyncHandler(async (req, res) => {
   console.log(req.body.phone);
-  const { phone } = req.body;
-  if (!phone) {
+  try {
+    const { phone } = req.body;
+    if (!phone) {
+      res.status(400);
+      throw new Error("please add valid phone Number");
+    }
+
+    const userExists = await User.findOne({
+      phone,
+    });
+
+    if (userExists) {
+      res.status(400);
+      throw new Error("User already Exists !");
+    }
+
+    const user = await User.create({
+      phone,
+    });
+
+    // if (user) {
+    //   sendSms(phone)
+    //     .then((verification) => {
+    //       res.status(201).json({
+    //         status: "OTP Send",
+    //         token: generateToken(user.id, '60s'),
+    //       });
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       res.status(400);
+    //       throw new Error("otp sending Failed");
+    //     });
+    // } else {
+    //   res.status(400);
+    //   throw new Error("Invalid User Data");
+    // }
+
+    //   on develop
+    res.status(201).json({
+      status: "OTP Send",
+      token: generateToken(user.id, "60s"),
+    });
+  } catch (error) {
+    console.log(error);
     res.status(400);
-    throw new Error("please add valid phone Number");
-  }
-
-  const userExists = await User.findOne({ phone });
-
-  if (userExists) {
-    res.status(400);
-    throw new Error("user already Exists !");
-  }
-
-  const user = await User.create({
-    phone,
-  });
-
-  if (user) {
-    sendSms(phone)
-      .then((verification) => {
-        res.status(201).json({
-          status: "OTP Send",
-          token: generateToken(user.id, '60s'),
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(400);
-        throw new Error("otp sending Failed");
-      });
-  } else {
-    res.status(400);
-    throw new Error("Invalid User Data");
+    throw new Error(error);
   }
 });
 
@@ -51,31 +65,53 @@ const sentOtp = asyncHandler(async (req, res) => {
 //@Route PUT /api/user/verifyOtp
 //@Access Protected
 const verifyNumber = asyncHandler(async (req, res) => {
-  const { otp } = req.body;
-  let user = req.user;
-  let id = mongoose.Types.ObjectId(req.user.id);
-  console.log(req.user);
-  if (user.isVerified) {
-    res.status(201).json({
-      isVerified: true,
-      token: generateToken(user.id, '5m'),
-    });
-  } else {
-    verifyOtp(user.phone, otp).then(async (checkStatus) => {
+  try {
+    const { otp } = req.body;
+    let user = req.user;
+    let id = mongoose.Types.ObjectId(req.user.id);
+    if (user.isVerified) {
+      res.status(201).json({
+        isVerified: true,
+        token: generateToken(user.id, "5m"),
+      });
+    } else {
+      // verifyOtp(user.phone, otp).then(async (checkStatus) => {
+      //   await User.findByIdAndUpdate({ _id: user.id }, { isVerified: true })
+      //     .then((d) => {
+      //       console.log(d);
+      //       res.status(201).json({
+      //         id: user.id,
+      //         isVerified: true,
+      //         token: generateToken(user.id, "5m"),
+      //       });
+      //     })
+      //     .catch((err) => {
+      //       res.status(400);
+      //       throw new Error("update failed");
+      //     });
+      // }).catch(()=>{
+      //   res.status(400);
+      //   throw new Error('Otp verfication failed')
+      // })
+
+      //on Develop
       await User.findByIdAndUpdate({ _id: user.id }, { isVerified: true })
         .then((d) => {
           console.log(d);
           res.status(201).json({
             id: user.id,
             isVerified: true,
-            token: generateToken(user.id,'5m'),
+            token: generateToken(user.id, "5m"),
           });
         })
         .catch((err) => {
           res.status(400);
-          throw new Error("otp verification failed");
+          throw new Error("update failed");
         });
-    });
+    }
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
   }
 });
 
@@ -105,8 +141,8 @@ const registerUser = asyncHandler(async (req, res) => {
       console.log(user);
       res.status(200).json({
         name: name,
-        token: generateToken(user.id, '1h'),
-        refreshToken: generateToken(user.id, '2h'),
+        token: generateToken(user.id, "1h"),
+        refreshToken: generateToken(user.id, "2h"),
       });
     })
     .catch((err) => {
@@ -129,8 +165,8 @@ const loginUser = asyncHandler(async (req, res) => {
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       name: user.name,
-      token: generateToken(user.id, '1h'),
-      refreshToken: generateToken(user.id, '2h'),
+      token: generateToken(user.id, "1h"),
+      refreshToken: generateToken(user.id, "2h"),
     });
   } else {
     res.status(400).send("Invalid credentials");

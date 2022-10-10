@@ -25,7 +25,7 @@ const signupTimeOut = asyncHandler(async (req, res, next) => {
       if (error.message == "jwt expired") {
 
         res.status(401);
-        throw new Error(error.message);
+        throw new Error("Timeout");
       } else {
         console.log(error.message);
         res.status(401);
@@ -61,7 +61,7 @@ const partnerTimeOut = asyncHandler(async (req, res, next) => {
       if (error.message == "jwt expired") {
 
         res.status(401);
-        throw new Error(error.message);
+        throw new Error("Timeout");
       } else {
         console.log(error.message);
         res.status(401);
@@ -189,13 +189,17 @@ const protectAdmin = asyncHandler(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       //Get user from the token
-      req.admin = await Partner.findOne({
-      $and: { _id: decoded.id,
-        isAdmin: true}
-      }).select("-password");
+      const admin = await Partner.findOne({_id: decoded.id}).select("-password");
+      if(admin.isAdmin){
+        req.admin=admin
+      }else{
+        res.status(400);
+        throw new Error('Not authorised')
+      }
 
       next();
     } catch (error) {
+      console.log(error)
       if (error.message == "jwt expired") {
         res.status(401);
         throw new Error(error.message);

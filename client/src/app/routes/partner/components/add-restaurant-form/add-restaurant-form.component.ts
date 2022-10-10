@@ -9,54 +9,59 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-restaurant-form.component.scss']
 })
 export class AddRestaurantFormComponent implements OnInit {
-file!:string
-  constructor(private fb: FormBuilder, private _router: Router,private _partnerService:PartnerService) { }
+  bar: boolean = false;
+  constructor(private fb: FormBuilder, private _router: Router, private _partnerService: PartnerService) { }
 
   ngOnInit(): void {
   }
 
-  onboardingForm:FormGroup= this.fb.group({
-    restaurantName:['',[Validators.required]],
-    restaurantaLocality:['',[Validators.required]],
-    locationLongitude:['',[Validators.required]],
-    locationLatitude:['',[Validators.required]],
-    contactNumber:['',[Validators.required]],
-    address:['',[Validators.required]],
-    ownerName:['',[Validators.required]],
-    ownerEmail:['',[Validators.required,Validators.email]],
-    restaurantType:['',[Validators.required]],
-    cuisineType:['',[Validators.required]],
-    openingTime:['09:00',[Validators.required]],
-    closingTime:['22:00',[Validators.required]],
-    gstNo:['',[Validators.required]],
-    bankAccountNo:['',[Validators.required]],
-    fssaiFile:['',[Validators.required]],
-    pancardFile:['',[Validators.required]],
-    passbookFile:['',[Validators.required]],
-    iconFile:['',[Validators.required]],
+  onboardingForm: FormGroup = this.fb.group({
+    restaurantName: ['', [Validators.required]],
+    restaurantLocality: ['', [Validators.required]],
+    locationLongitude: ['', [Validators.required]],
+    locationLatitude: ['', [Validators.required]],
+    contactNumber: ['', [Validators.required]],
+    address: ['', [Validators.required]],
+    ownerName: ['', [Validators.required]],
+    ownerEmail: ['', [Validators.required, Validators.email]],
+    restaurantType: ['', [Validators.required]],
+    cuisineType: ['', [Validators.required]],
+    openingTime: ['09:00', [Validators.required]],
+    closingTime: ['22:00', [Validators.required]],
+    gstNo: ['', [Validators.required]],
+    bankAccountNo: ['', [Validators.required]],
+    fssaiFile: ['', [Validators.required]],
+    pancardFile: ['', [Validators.required]],
+    passbookFile: ['', [Validators.required]],
+    iconFile: ['', [Validators.required]],
   })
 
-  submitForm(){
+  detect() {
+    navigator.geolocation.getCurrentPosition((x) => {
+      this.onboardingForm.controls['locationLongitude'].setValue(x.coords.longitude)
+      this.onboardingForm.controls['locationLatitude'].setValue(x.coords.latitude)
+    })
+  }
 
-
-    
+  submitForm() {
+    this.bar=!this.bar;
     const formData = new FormData();
     for (const property in this.onboardingForm.value) {
-      formData.append(`${property}`,this.onboardingForm.value[property])
+      formData.append(`${property}`, this.onboardingForm.value[property])
     }
 
-    console.log(this.onboardingForm.value)
-    this.file=this.onboardingForm.controls['fssaiFile'].value
     this._partnerService.applyForRestaurant(formData)
-    .subscribe({
-      next:(v)=>{
-        console.log(v)
-        this._router.navigate(['partner'])
-      },
-      error:(e)=>{
-        console.log(e)
-      }
-    })
+      .subscribe({
+        next: (v) => {
+          this.bar=!this.bar;
+          console.log(v)
+          this._router.navigate(['partner'])
+        },
+        error: (e) => {
+          this.bar=!this.bar;
+          console.log(e)
+        }
+      })
 
   }
 

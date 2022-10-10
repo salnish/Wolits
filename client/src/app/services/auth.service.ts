@@ -73,4 +73,17 @@ export class AuthService {
     this._router.navigate([''])
   }
 
+  logoutPartner() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('partner')
+    this._router.navigate([''])
+  }
+  logoutAdmin() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('id')
+    this._router.navigate([''])
+  }
+
 }

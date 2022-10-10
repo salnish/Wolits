@@ -31,6 +31,7 @@ export class UserRegisterComponent implements OnInit {
       },
       error:(e)=>{
         console.log(e)
+        this.err=e
       }
     })
     

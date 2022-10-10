@@ -11,6 +11,10 @@ $b-PartnerLogo:url('../../../assets/images/partnerLogoBlack.png');
         font-weight: bold;
       }
 }
+.pos{
+    position: relative;
+    top:3rem
+  }
 
 .fix{
 position: fixed;
@@ -20,12 +24,16 @@ position: fixed;
     width:21em;
     height:auto;
     background-color:gray;
+    .full{
+        position: relative;
+        width: 100%;
+    }
    ul{
     height: max-content;
     list-style-type: none;
     padding: 0;
     margin: 0;
-    width: 100%;
+    width: 17em;
     li{
         width: 100%;
         text-align: center;
@@ -45,7 +53,7 @@ position: fixed;
 
 
 .logo{
-
+    padding: 23px;
     background-color: black;
     
 
@@ -123,10 +131,7 @@ position: fixed;
 }
 
 .content-body{
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    min-height: 100vh;
+    width: 100%;
 }
 
 

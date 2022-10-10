@@ -28,12 +28,12 @@
             <h1>{{title}}</h1><mat-icon class="mx-2">dashboard</mat-icon>
             <span class="spacer"></span>
            <div> <button mat-icon-button><mat-icon>notifications</mat-icon></button></div>
+           <div> <button mat-icon-button (click)="_authService.logoutAdmin()" ><mat-icon>logout</mat-icon></button></div>
         </mat-toolbar>
         <div class="pos">
             <div class="content-body">
                 <router-outlet></router-outlet>
-            </div>
-           
+            </div>         
         </div>
         
     </div>    

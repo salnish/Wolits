@@ -48,10 +48,21 @@
                   <span>Submited On : </span> {{ app.createdAt | date: "medium" }}
                 </h4>
               </div>
+              <div >
+                <mat-card>
+                  <mat-tab-group>
+                    <mat-tab label="FSSAI "><img src="{{app.fssaiFile}}" alt=""></mat-tab>
+                    <mat-tab label="Pancard"> <img src="{{app.pancardFile}}" alt=""></mat-tab>
+                    <mat-tab label="Bank passbook"><img src="{{app.passbookFile}}" alt=""></mat-tab>
+                    <mat-tab label="Icon"> <img src="{{app.iconFile}}" alt=""></mat-tab>
+                  </mat-tab-group>
+                  
+                </mat-card>
+              </div>
              
               <div fxLayout="row">
-                <button *ngIf="app.staus=='pending'"  mat-raised-button color="primary" class="m-4" >Approve</button>
-                <button *ngIf="app.staus=='pending'"  mat-raised-button color="warn" class="m-4" >Reject</button>
+                <button *ngIf="app.status=='pending'" (click)="updateStatus(app._id,'approved')"  mat-raised-button color="primary" class="m-4" >Approve</button>
+                <button *ngIf="app.status=='pending'" (click)="updateStatus(app._id,'rejected')" mat-raised-button color="warn" class="m-4" >Reject</button>
               </div>
               
 

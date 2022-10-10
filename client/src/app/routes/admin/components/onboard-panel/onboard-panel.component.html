@@ -1,6 +1,6 @@
 <div *ngIf="showTable" class="content-body">
     <div fxLayout="row" fxHide.lt-sm="true">
-        <button mat-raised-button color="accent" (click)="getRestaurants('approved')" class="mx-3 my-4">Approved
+        <button mat-raised-button disabled color="accent" (click)="getRestaurants('approved')" class="mx-3 my-4">Approved
             Restaurant</button>
         <button mat-raised-button color="accent" (click)="getRestaurants('pending')" class="mx-3 my-4">Pending
             Restaurant</button>
@@ -18,7 +18,7 @@
         </mat-menu>
     </div>
 
-    <mat-card>
+    <mat-card *ngIf="dataSource.length>0">
 
         <table mat-table [dataSource]="dataSource">
 
@@ -61,14 +61,8 @@
 
         <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
         </mat-paginator>
-
-
-
-
-
-
-
     </mat-card>
+    <mat-card *ngIf="dataSource.length<=0"><H1>No Restaurant data available <mat-icon>hide_source</mat-icon></H1></mat-card>
 </div>
 <div class="content-body">
     <app-view-restaurant-details
