@@ -1,3 +1,4 @@
+import { PartnerModel } from './../../models/partner-model';
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import { PartnerAuthService } from './../../services/partner-auth.service';
@@ -19,7 +20,7 @@ export class PartnerLoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onLogin(event: any) {
+  onLogin(event: PartnerModel) {
     console.log(event);
     this._authService.authenticatePartner(event)
       .subscribe({

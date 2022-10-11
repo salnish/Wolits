@@ -1,3 +1,4 @@
+import { RestaurantModel } from './../../../../models/restaurant-model';
 import { AdminService } from './../../../../services/admin.service';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +13,7 @@ export class OnboardPanelComponent implements OnInit {
   restaurantId!:string;
   constructor(private _adminService:AdminService) { }
   displayedColumns: string[] = ['position', 'restaurantId', 'restaurantName', 'status','action'];
-  dataSource=[]
+  dataSource:RestaurantModel[]=[]
 
   ngOnInit(): void {
     this.getRestaurants('approved')

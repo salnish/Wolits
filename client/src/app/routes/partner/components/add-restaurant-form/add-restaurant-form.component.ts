@@ -1,3 +1,4 @@
+import { RestaurantModel } from './../../../../models/restaurant-model';
 import { PartnerService } from './../../../../services/partner.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';

@@ -1,3 +1,4 @@
+import { User } from './../../models/user';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -19,9 +20,8 @@ export class UserRegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onRegister(event:any){
-    console.log(event);
-    this._authService.registerUser(event)
+  onRegister(userData:User){
+    this._authService.registerUser(userData)
     .subscribe({
       next:(v)=>{
         this._authService.setTokens(v.token,v.refreshToken)

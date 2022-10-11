@@ -1,3 +1,4 @@
+import { User } from './../../models/user';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +19,7 @@ export class UserLoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onLogin(event:any){
+  onLogin(event:User){
     console.log(event);
     this._authService.authenticateUser(event)
     .subscribe({

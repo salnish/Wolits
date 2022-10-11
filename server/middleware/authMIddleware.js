@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const Partner = require("../models/partnerModel");
-const { generateToken } = require("../utils/jwt");
+const { generateToken,verifyToken } = require("../utils/jwt");
 
 const signupTimeOut = asyncHandler(async (req, res, next) => {
   let token;
@@ -86,7 +86,7 @@ const refreshAccessToken = asyncHandler(async (req, res, next) => {
       token = refreshToken;
 
       //Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = verifyToken(token);
 
       //Get user from the token
       let user = await User.findById(decoded.id).select("-password");

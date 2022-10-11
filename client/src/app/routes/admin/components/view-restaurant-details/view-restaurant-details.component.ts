@@ -1,3 +1,4 @@
+import { RestaurantModel } from './../../../../models/restaurant-model';
 import { AdminService } from './../../../../services/admin.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ViewRestaurantDetailsComponent implements OnInit {
   title: string = 'Application Details'
-  app!: any
+  app!: RestaurantModel;
   @Input() restaurantId!: string;
   @Output() close: EventEmitter<any> = new EventEmitter()
   constructor(private _adminService: AdminService) { }

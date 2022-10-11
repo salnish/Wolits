@@ -1,3 +1,4 @@
+import { RestaurantModel } from './../models/restaurant-model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -11,12 +12,12 @@ export class AdminService {
   constructor(private http: HttpClient, private _router: Router) { }
 
   getRestaurants(status: any) {
-    return this.http.get<any>(`${this._adminUrl}/getRestaurants/${status}`)
+    return this.http.get<RestaurantModel[]>(`${this._adminUrl}/getRestaurants/${status}`)
 
   }
 
   getRestaurantDetails(restaurantId: string) {
-    return this.http.get<any>(`${this._adminUrl}/restaurantDetails/${restaurantId}`)
+    return this.http.get<RestaurantModel>(`${this._adminUrl}/restaurantDetails/${restaurantId}`)
   }
 
   updateOnboardStatus(formId:string,status:string){

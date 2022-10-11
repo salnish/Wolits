@@ -1,3 +1,4 @@
+import { PartnerModel } from './../../models/partner-model';
 import { PartnerAuthService } from './../../services/partner-auth.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +19,7 @@ export class PartnerVerifyPhoneComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  verifyNumber(event:any){
+  verifyNumber(event:PartnerModel){
     console.log(event)
     this._authService.sentOtp(event)
     .subscribe({

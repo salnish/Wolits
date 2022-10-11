@@ -19,7 +19,7 @@ export class OtpVerifyComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  verifyOtp(event:any){
+  verifyOtp(event:string){
     this._authService.verifyNumber(event)
     .subscribe({
       next:(v)=>{

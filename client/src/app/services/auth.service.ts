@@ -1,3 +1,4 @@
+import { User } from './../models/user';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -10,19 +11,19 @@ export class AuthService {
   private _authUrl = "http://localhost:5000/api/user"
   constructor(private http: HttpClient, private _router: Router) { }
 
-  sentOtp(phone: any) {
+  sentOtp(phone: User) {
     return this.http.post<any>(`${this._authUrl}/verifyNumber`, phone)
   }
 
-  verifyNumber(otp: any) {
+  verifyNumber(otp:string) {
     return this.http.put<any>(`${this._authUrl}/verifyOtp`, otp)
   }
 
-  registerUser(user: any) {
+  registerUser(user: User) {
     return this.http.put<any>(`${this._authUrl}/register`, user)
   }
 
-  authenticateUser(user: any) {
+  authenticateUser(user: User) {
     return this.http.post<any>(`${this._authUrl}`, user)
   }
 

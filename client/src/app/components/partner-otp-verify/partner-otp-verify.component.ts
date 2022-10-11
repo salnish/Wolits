@@ -1,3 +1,4 @@
+import { PartnerModel } from './../../models/partner-model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { PartnerAuthService } from './../../services/partner-auth.service';
@@ -19,7 +20,7 @@ export class PartnerOtpVerifyComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  verifyOtp(event:any){
+  verifyOtp(event:string){
     this._authService.verifyNumber(event)
     .subscribe({
       next:(v)=>{
