@@ -5,13 +5,11 @@ const dishSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"restaurant",
         require:true,
-        unique:true
     },
    partnerId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"partner",
         require:true,
-        unique:true
     },
     dishName:{
         type:String

@@ -15,7 +15,7 @@ export class AuthService {
     return this.http.post<any>(`${this._authUrl}/verifyNumber`, phone)
   }
 
-  verifyNumber(otp:string) {
+  verifyNumber(otp: string) {
     return this.http.put<any>(`${this._authUrl}/verifyOtp`, otp)
   }
 
@@ -55,7 +55,7 @@ export class AuthService {
     return localStorage.getItem('timeOut')
   }
 
-  
+
 
   loggedIn() {
     return !!localStorage.getItem('token')

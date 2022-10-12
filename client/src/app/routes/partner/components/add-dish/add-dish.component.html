@@ -1,0 +1,74 @@
+<mat-card>
+    <div class="bar">
+        <mat-spinner *ngIf="bar"></mat-spinner>
+    </div>
+    <div class="title">
+        <h2>Add your Dish here <mat-icon>dinner_dining</mat-icon> </h2>
+    </div>
+    <mat-card-content>
+        <form name="dishForm" (ngSubmit)="submitForm()" fxLayout="column" [formGroup]="dishForm">
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Dish Name</mat-label>
+                    <input formControlName="dishName" matInput placeholder="enter dish name" required />
+                    <mat-error>enter dish name</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-select formControlName="veg">
+                        <mat-option [value]="true">
+                            Veg
+                        </mat-option>
+                        <mat-option [value]="false">
+                            Non-Veg
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Enter locality name</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+                <mat-form-field appearance="outline">
+                    <mat-select formControlName="category">
+                        <mat-option [value]="true">
+                            Veg
+                        </mat-option>
+                        <mat-option [value]="false">
+                            Non-Veg
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>enter longitude</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Discription</mat-label>
+                    <textarea formControlName="discription" matInput placeholder="Enter your discription" required
+                        matInput></textarea>
+                    <mat-error>Enter discription</mat-error>
+                </mat-form-field>
+
+
+
+            </div>
+
+
+         
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row"> 
+                <mat-form-field appearance="outline" class="mt-4">
+                    <mat-label>Dish Price</mat-label>
+                    <input formControlName="price" matInput placeholder="enter dish price" required />
+                    <mat-error>enter dish price</mat-error>
+                </mat-form-field>
+                <div class="upload">
+                    <label>Icon image</label><br>
+                    <input (change)="getFile($event)" fxHide="true" id="image" type="file" />
+                    <label for="image" class="btn btn-primary label">
+                        <mat-icon>upload_file</mat-icon> Choose Files
+                    </label>
+                </div>
+            </div>
+
+
+            <button class="m-3" (submit)="dishForm" mat-raised-button color="accent">Submit application</button>
+        </form>
+    </mat-card-content>
+
+</mat-card>

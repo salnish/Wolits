@@ -1,7 +1,7 @@
 <mat-card>
     <div class="bar">
         <mat-spinner *ngIf="bar"></mat-spinner>
-      </div>
+    </div>
     <div class="title">
         <h2>Register your Restaurant here </h2>
     </div>
@@ -80,12 +80,14 @@
             <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
                 <mat-form-field appearance="outline">
                     <mat-label>Opening Time </mat-label>
-                    <input formControlName="openingTime"type="time" matInput placeholder="enter restaurent name" required />
+                    <input formControlName="openingTime" type="time" matInput placeholder="enter restaurent name"
+                        required />
                     <mat-error>Enter Opening Time</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Closing Time </mat-label>
-                    <input formControlName="closingTime" type="time"  matInput placeholder="enter restaurent name" required />
+                    <input formControlName="closingTime" type="time" matInput placeholder="enter restaurent name"
+                        required />
                     <mat-error>Enter Closing Time</mat-error>
                 </mat-form-field>
             </div>
@@ -111,7 +113,7 @@
                 </div>
                 <div class="upload">
                     <label>PAN card copy</label><br>
-                    <input (change)="getFile($event)"  fxHide="true" id="pancardFile" type="file" />
+                    <input (change)="getFile($event)" fxHide="true" id="pancardFile" type="file" />
                     <label for="pancardFile" class="btn btn-primary label">
                         <mat-icon>upload_file</mat-icon> Choose Files
                     </label>
@@ -121,20 +123,20 @@
             <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
                 <div class="upload">
                     <label>Bank passbook</label><br>
-                    <input (change)="getFile($event)"  fxHide="true" id="passbookFile" type="file" />
+                    <input (change)="getFile($event)" fxHide="true" id="passbookFile" type="file" />
                     <label for="passbookFile" class="btn btn-primary label">
                         <mat-icon>upload_file</mat-icon> Choose Files
                     </label>
                 </div>
                 <div class="upload">
                     <label>Icon image</label><br>
-                    <input (change)="getFile($event)"  fxHide="true" id="iconFile" type="file" />
+                    <input (change)="getFile($event)" fxHide="true" id="iconFile" type="file" />
                     <label for="iconFile" class="btn btn-primary label">
                         <mat-icon>upload_file</mat-icon> Choose Files
                     </label>
                 </div>
             </div>
-            
+
             <button class="mx-3" (submit)="onboardingForm" mat-raised-button color="accent">Submit application</button>
         </form>
     </mat-card-content>

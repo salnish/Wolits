@@ -1,3 +1,5 @@
+import { ViewDishComponent } from './components/view-dish/view-dish.component';
+import { AddDishComponent } from './components/add-dish/add-dish.component';
 import { MenuMangementComponent } from './components/menu-mangement/menu-mangement.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AddRestaurantFormComponent } from './components/add-restaurant-form/add-restaurant-form.component';
@@ -14,6 +16,8 @@ const routes: Routes = [{
     {path:'addRestaurant',component:AddRestaurantFormComponent},
     {path:'dashboard',component:DashboardComponent},
     {path:'menuManage',component:MenuMangementComponent},
+    {path:'addDish',component:AddDishComponent},
+    {path:'viewDish/:id',component:ViewDishComponent},
     { path: '', redirectTo: '/partner/home', pathMatch: 'full' }
   ]
 }];

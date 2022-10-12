@@ -19,4 +19,12 @@ export class PartnerService {
   getRestaurant(){
     return this.http.get<any>(`${this._partnerUrl}/getForm`)
   }
+
+  addDishToMenu(dishData:any){
+    return this.http.post<any>(`${this._partnerUrl}/addDish`,dishData)
+  }
+
+  getDishes(page:number,limit:number){
+    return this.http.get<any>(`${this._partnerUrl}/getDishes/${page}/${limit}`)
+  }
 }

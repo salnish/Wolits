@@ -1,4 +1,5 @@
 export interface RestaurantModel {
+    _id:string;
     partnerId:string;
     restaurantName:string;
     restaurantLocality:string;

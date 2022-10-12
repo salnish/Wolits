@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 const Partner = require("../models/partnerModel");
 const Restaurant = require("../models/restaurantModel");
+const Dish = require("../models/dishModel");
 const { sendSms, verifyOtp } = require("./twillioController");
 const cloudinaryUploadImg = require("../utils/cloudinary");
 const { generateToken } = require("../utils/jwt");
@@ -267,6 +268,62 @@ const restaurantDetails = asyncHandler(async (req, res) => {
   }
 });
 
+//@Desc Create new dish document
+//Access protected
+const addDish = asyncHandler(async (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+  try {
+    //upload the files to cloudinary an get the url
+    const image = await cloudinaryUploadImg(req.file.path);
+    //create partner and restaurant details  object
+    let partnerData = {
+      partnerId: mongoose.Types.ObjectId(req.partner.id),
+      restaurantId: req.partner.restaurentId,
+      image: image.url,
+    };
+
+    //combine the partner details and dish details all together
+    const dishData = { ...req.body, ...partnerData };
+
+    //Create new Dish document
+    await Dish.create(dishData).then((dish) => {
+      res.status(201).json({
+        id: dish.id,
+        created: true,
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400);
+    throw new Error("Adding dish failed");
+  }
+});
+
+//@Desc Get dishes by pagination
+//Route GET api/partner/getDishes
+//Access protected
+const getDishes = asyncHandler(async (req, res) => {
+  try {
+    const { page, limit } = req.params;
+    const dishes = await Dish.find()
+      .limit(limit)
+      .skip((page - 1) * limit);
+
+    const total =await Dish.count()
+    console.log(total);
+    res.status(200).json({
+      total:total,
+      dishes:dishes
+    });
+    console.log(req.params);
+  } catch (error) {
+    console.log(error);
+    res.status(400);
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   sentOtp,
   verifyNumber,
@@ -274,4 +331,6 @@ module.exports = {
   loginPartner,
   postApplication,
   restaurantDetails,
+  addDish,
+  getDishes,
 };

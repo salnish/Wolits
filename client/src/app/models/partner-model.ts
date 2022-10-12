@@ -1,4 +1,5 @@
 export interface PartnerModel {
+    _id?:string;
     phone?:string;
     name?:string;
     email?:string;

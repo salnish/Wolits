@@ -1,4 +1,5 @@
 export interface User {
+    _id?:string;
     phone?:number;
     name?:string;
     email?:string;

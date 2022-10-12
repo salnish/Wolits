@@ -15,6 +15,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSelectModule } from '@angular/material/select';
 
 
 import { PartnerRoutingModule } from './partner-routing.module';
@@ -23,6 +25,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AddRestaurantFormComponent } from './components/add-restaurant-form/add-restaurant-form.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenuMangementComponent } from './components/menu-mangement/menu-mangement.component';
+import { AddDishComponent } from './components/add-dish/add-dish.component';
+import { ViewDishComponent } from './components/view-dish/view-dish.component';
 
 
 
@@ -32,7 +36,9 @@ import { MenuMangementComponent } from './components/menu-mangement/menu-mangeme
     HomeComponent,
     AddRestaurantFormComponent,
     DashboardComponent,
-    MenuMangementComponent
+    MenuMangementComponent,
+    AddDishComponent,
+    ViewDishComponent
 
   ],
   imports: [
@@ -54,8 +60,9 @@ import { MenuMangementComponent } from './components/menu-mangement/menu-mangeme
     MatSidenavModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatPaginatorModule
-
+    MatPaginatorModule,
+    MatBadgeModule,
+    MatSelectModule
   ]
 })
 export class PartnerModule { }
