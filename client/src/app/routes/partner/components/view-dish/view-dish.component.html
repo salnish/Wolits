@@ -1,7 +1,42 @@
 <mat-card>
-    <h1>fdsjkhgdfshjkdf</h1>
-    <h1>fdsjkhgdfshjkdf</h1>
-    <h1>fdsjkhgdfshjkdf</h1>
-    <h1>fdsjkhgdfshjkdf</h1>
-    <h1>fdsjkhgdfshjkdf</h1>
+    <div class="bar">
+        <mat-spinner *ngIf="bar"></mat-spinner>
+    </div>
+    <div class="title">
+        <h2> Dish Details <mat-icon>dinner_dining</mat-icon> </h2>
+    </div>
+    <button class="btn" routerLink="/partner/menuManage" mat-icon-button><mat-icon>close</mat-icon></button>
+    <mat-card-content>
+        <div class="full-width" fxLayout.lt-md="column" fxLayout.gt-sm="row" >
+            <div class=" half-width"  fxLayout="column">
+                <div fxLayout="row" >
+                    <h4><span>Dish Name :</span> {{ dishData.dishName|titlecase}}</h4>
+                    <button mat-icon-button><mat-icon>edit</mat-icon></button>
+                </div>
+                <div fxLayout="row">
+                    <h4><span>Type :</span> {{ dishData.veg?'Veg':'Non-veg'}}</h4>
+                    <button mat-icon-button><mat-icon>edit</mat-icon></button>
+                </div>
+                <div fxLayout="row">
+                    <h4><span>Category :</span> {{ dishData.category|titlecase}}</h4>
+                    <button mat-icon-button><mat-icon>edit</mat-icon></button>
+                </div>
+                <div fxLayout="row">
+                    <h4><span>Price :</span> {{ dishData.price|currency:'INR'}}</h4>
+                    <button mat-icon-button><mat-icon>edit</mat-icon></button>
+                </div>
+                <div fxLayout="row">
+                    <p><span>Discription :</span> {{ dishData.discription|titlecase}}</p>
+                    <button mat-icon-button><mat-icon>edit</mat-icon></button>
+                </div>
+            </div>
+            <div class=" img half-width" fxLayout="row">
+                <img  src="{{dishData.image}}" alt="">
+                <button mat-icon-button><mat-icon>edit</mat-icon></button>
+            </div>
+        </div>
+            
+
+    </mat-card-content>
+
 </mat-card>

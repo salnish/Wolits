@@ -9,28 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  declined:boolean=false
-  pending!:boolean;
-  constructor(private _partnerService:PartnerService,private _router:Router) { }
+  declined: boolean = false
+  pending!: boolean;
+  constructor(private _partnerService: PartnerService, private _router: Router) { }
 
   ngOnInit(): void {
     this._partnerService.getRestaurant()
-    .subscribe({
-      next:(v)=>{
-        console.log(v)
-        v.status=='approved'?this._router.navigate(['/partner/dashboard']):v.status=='rejected'?this.declined=true:this.pending=true
-        console.log(v.approved);
-        console.log(v.declined);
-        console.log(this.pending);
-        console.log(this.declined);
-        
-        
-      },error:(e)=>{
-       
-        
-      }
-    })
-  
-    
+      .subscribe({
+        next: (v) => {
+          v.status == 'approved' ? this._router.navigate(['/partner/dashboard']) : v.status == 'rejected' ? this.declined = true : this.pending = true
+        }, error: (e) => {
+        }
+      })
   }
 }

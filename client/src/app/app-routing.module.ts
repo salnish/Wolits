@@ -29,6 +29,11 @@ const routes: Routes = [
     import('./routes/partner/partner.module').then((m)=> m.PartnerModule)
   },
   {
+    path:'user',
+    loadChildren: ()=> 
+    import('./routes/user/user.module').then((m)=> m.UserModule)
+  },
+  {
     path:'admin',
     loadChildren: ()=> 
     import('./routes/admin/admin.module').then((m)=> m.AdminModule)

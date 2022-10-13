@@ -1,6 +1,12 @@
 mat-card{
     text-align: center;
     margin:10em 1em 5em;
+    .close-btn{
+        position:absolute;
+        right: 0;
+        top: 0;
+        margin: 1em;
+    }
 }
 .lati{
     width: 11em;

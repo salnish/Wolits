@@ -305,8 +305,9 @@ const addDish = asyncHandler(async (req, res) => {
 //Access protected
 const getDishes = asyncHandler(async (req, res) => {
   try {
+    const partnerId = mongoose.Types.ObjectId(req.partner.id);
     const { page, limit } = req.params;
-    const dishes = await Dish.find()
+    const dishes = await Dish.find({ partnerId: partnerId })
       .limit(limit)
       .skip((page - 1) * limit);
 
@@ -323,6 +324,19 @@ const getDishes = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+//@Desc get single dish details
+//Route GET api/partner/getDish
+//Access protect
+const getDish= asyncHandler(async(req,res)=>{
+  try{
+const dishId= mongoose.Types.ObjectId(req.params.id);
+const dish=await Dish.findById({_id:dishId})
+res.status(200).json(dish)
+  }catch(error){
+    res.status(400)
+    throw new Error(error)
+  }
+})
 
 module.exports = {
   sentOtp,
@@ -333,4 +347,5 @@ module.exports = {
   restaurantDetails,
   addDish,
   getDishes,
+  getDish,
 };

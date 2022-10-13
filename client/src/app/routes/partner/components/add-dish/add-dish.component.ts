@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-dish.component.scss']
 })
 export class AddDishComponent implements OnInit {
+  
   bar: boolean = false;
   constructor(private fb: FormBuilder, private _router: Router, private _partnerService: PartnerService) { }
 

@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuMangementComponent implements OnInit {
   pageNo: number = 1;
-  limit: number = 3;
+  limit: number = 10;
   total!: number;
   constructor(private _partnerService: PartnerService) { }
   displayedColumns: string[] = ['position', 'image', 'dishName', 'action'];
@@ -45,5 +45,13 @@ export class MenuMangementComponent implements OnInit {
     this.pageNo = this.pageNo + change;
     console.log(this.pageNo)
     this.getDishes()
+  }
+
+  changeView(){
+   this.pageNo=1;
+   console.log(this.limit);
+   
+   this.getDishes()
+    
   }
 }

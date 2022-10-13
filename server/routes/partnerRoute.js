@@ -7,6 +7,7 @@ const { sentOtp,
     registerPartner,
     addDish,
     getDishes,
+    getDish,
     loginPartner}= require('../controllers/partnerController')
 const { partnerTimeOut ,partnerProtect} = require("../middleware/authMIddleware");
 const upload = require('../utils/multer')
@@ -24,6 +25,7 @@ router.post('/applyForm',partnerProtect,upload.fields([
 router.get('/getForm',partnerProtect,restaurantDetails)
 router.post('/addDish',partnerProtect,upload.single('image'),addDish);
 router.get('/getDishes/:page/:limit',partnerProtect,getDishes)
+router.get('/getDish/:id',partnerProtect,getDish)
 
 
 module.exports= router;

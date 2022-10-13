@@ -17,6 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 import { PartnerRoutingModule } from './partner-routing.module';
@@ -38,8 +39,8 @@ import { ViewDishComponent } from './components/view-dish/view-dish.component';
     DashboardComponent,
     MenuMangementComponent,
     AddDishComponent,
-    ViewDishComponent
-
+    ViewDishComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -62,7 +63,8 @@ import { ViewDishComponent } from './components/view-dish/view-dish.component';
     MatTableModule,
     MatPaginatorModule,
     MatBadgeModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ]
 })
 export class PartnerModule { }

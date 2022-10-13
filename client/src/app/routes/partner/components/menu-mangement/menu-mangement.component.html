@@ -28,8 +28,8 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element"> <button mat-flat-button [routerLink]="['/partner/viewDish/',element._id]"
-                    color="primary">
+            <td mat-cell *matCellDef="let element"> <button mat-flat-button
+                    [routerLink]="['/partner/viewDish/',element._id]" color="primary">
                     View Dish
                 </button> </td>
         </ng-container>
@@ -42,16 +42,19 @@
         <ul class="pagination justify-content-end">
             <li class="page-item "><a class="page-link">Items per page</a></li>
             <li class="page-item "><a class="page-link">
-               
-                    <mat-select>
-                        <mat-option [value]="true">
-                            Veg
+
+                    <mat-select (selectionChange)="changeView()" [(ngModel)]="limit" name="limit">
+                        <mat-option  [value]="10">
+                           10
                         </mat-option>
-                        <mat-option [value]="false">
-                            Non-Veg
+                        <mat-option [value]="15">
+                            15
+                        </mat-option>
+                        <mat-option [value]="20">
+                            20
                         </mat-option>
                     </mat-select>
-            </a></li>
+                </a></li>
             <li class="page-item ">
                 <a class="page-link" (click)="changePage(-1)" tabindex="-1" aria-disabled="true">Previous</a>
             </li>

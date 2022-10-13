@@ -5,6 +5,7 @@
     <div class="title">
         <h2>Add your Dish here <mat-icon>dinner_dining</mat-icon> </h2>
     </div>
+    <button class="close-btn" routerLink="/partner/menuManage" mat-icon-button><mat-icon>close</mat-icon></button>
     <mat-card-content>
         <form name="dishForm" (ngSubmit)="submitForm()" fxLayout="column" [formGroup]="dishForm">
             <div fxLayout.lt-md="column" fxLayout.gt-sm="row">

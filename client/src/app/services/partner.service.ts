@@ -27,4 +27,8 @@ export class PartnerService {
   getDishes(page:number,limit:number){
     return this.http.get<any>(`${this._partnerUrl}/getDishes/${page}/${limit}`)
   }
+
+  getDish(dishId:string){
+    return this.http.get<any>(`${this._partnerUrl}/getDish/${dishId}`)
+  }
 }
